@@ -1,0 +1,480 @@
+<form #f="ngForm" (ngSubmit)="OnSubmit(f)">
+    <div fxLayout="column" fxLayoutGap="20px">
+        <mat-card>
+
+            <mat-card-content>
+                <mat-card-title>Store Information</mat-card-title>
+
+                <div fxLayout="column" fxLayoutGap="8px">
+                    <mat-form-field style="max-width:50%">
+                        <mat-label>Store Name</mat-label>
+                        <input required ngModel name="storeName" matInput>
+                    </mat-form-field>
+
+
+                    <div fxLayout="row wrap" fxWrap fxLayoutGap="10px">
+                        <mat-form-field style="max-width:50%">
+                            <mat-select required [(ngModel)]="chanelType" name="chanelType">
+                                <mat-option *ngFor='let chanelTypeArray of chanelTypeArray;'
+                                    [value]=chanelTypeArray.name>
+                                    {{chanelTypeArray.name}}</mat-option>
+                            </mat-select>
+                            <mat-label>
+                                <mat-icon>storefront</mat-icon> <i> Chanel Type</i>
+                            </mat-label>
+                        </mat-form-field>
+
+                        <mat-form-field style="max-width:50%">
+                            <mat-select required [(ngModel)]="area" name="area">
+                                <mat-option *ngFor='let areaArray of areaArray;' [value]=areaArray.name>
+                                    {{areaArray.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-label>
+                                <mat-icon>public</mat-icon> <i> Area</i>
+                            </mat-label>
+                        </mat-form-field>
+                    </div>
+
+
+                    <mat-form-field style="max-width:70%">
+                        <mat-label> Address</mat-label>
+                        <input [ngModel]="storeAddress" name="storeAddress" matInput>
+                    </mat-form-field>
+
+                    <div fxLayout="row wrap" fxLayoutGap="10px">
+
+                        <mat-form-field style="max-width:70%">
+                            <mat-label> Contact Person</mat-label>
+                            <input [ngModel]="contactPerson" name="contactPerson" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field style="max-width:70%">
+                            <mat-label> Contact Number</mat-label>
+                            <input [ngModel]="contactNumber" name="contactNumber" matInput>
+                        </mat-form-field>
+
+
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="30px">
+
+                        <button mat-fab type="button" style="background-color: lightseagreen;" (click)=getLocation()>
+                            <mat-icon>location_on</mat-icon>
+                        </button>
+
+                        <b *ngIf="this.long != 0 " fxLayoutAlign="end end" 
+                        [style.color]="accu > 30 ? 'red' : 'black' " style="font-size:20px;height:30px;">Accuracy : {{this.accu | number:'.0-0'}} Meters</b>
+
+                    </div>
+
+
+                </div>
+
+
+
+            </mat-card-content>
+
+
+        </mat-card>
+
+
+<!-- Chillers section-->
+
+
+        <mat-card  style="background-color: rgb(118, 201, 204)">
+            <mat-card-title (click)="toggleShowDiv('divA')" style="color: darkblue; ">CHILLERS</mat-card-title> 
+        <div [@slideInOut]="animationState" style="overflow: hidden; padding-top :0; background-color: rgb(118, 201, 204);">
+
+            
+
+            <mat-divider></mat-divider>
+            <div style="height:10px"></div>
+            <div *ngFor="let drinks of chillersArray">
+                <mat-card class="chillerBox mat-elevation-z4">
+                    <div fxLayout="column" style="width:100%">
+
+
+
+                        <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
+                            <div fxLayout="row" fxFlex fxLayoutGap="10px">
+                                <b fxLayoutAlign="start center">{{drinks.company}}</b>
+                            </div>
+
+
+
+                            <mat-slide-toggle ngModel name="{{drinks.company}}_{{drinks.brand_name}}_avaliability">
+                            </mat-slide-toggle>
+
+
+
+
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </mat-card>
+
+
+
+
+        <mat-card>
+            <mat-form-field appearance="outline">
+                <mat-label>Filter</mat-label>
+                <input matInput [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
+                <button mat-button *ngIf="searchText" matSuffix mat-icon-button aria-label="Clear" (click)="searchText=''">
+                    <mat-icon>close</mat-icon>
+                    </button>
+            </mat-form-field>
+            <mat-tab-group dynamicHeight>
+
+
+                <!-- End Chillers section-->
+
+
+                <!-- <mat-tab label="Chillers">
+                  
+
+                    <mat-card *ngFor="let drinks of chillersArray; index as i" class="box mat-elevation-z4">
+                        <div fxLayout="column" style="width:100%">
+                            <b>{{drinks.company}}</b>
+
+
+                            <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
+                                <div fxLayout="row" fxFlex fxLayoutGap="10px">
+                                    <b fxLayoutAlign="start center">{{drinks.brand_name}} - {{drinks.flavour}} </b><b
+                                        *ngIf="drinks.size !=1" fxLayoutAlign="start center">- {{drinks.size}}</b>
+                                </div>
+
+
+
+                                <mat-slide-toggle ngModel
+                                    name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_avaliability">
+                                </mat-slide-toggle>
+
+
+
+
+                            </div>
+                        </div>
+                    </mat-card>
+
+
+
+                </mat-tab> -->
+
+
+                <mat-tab label="E_Drinks">
+                    <div style="width:100%;" fxLayout="column" fxLaoutGap="8px">
+                        <!-- <div>Filters</div>
+                    <mat-chip-list #chipfilter fxLayoutAlign="center center" aria-label="filter selection">
+                        <mat-chip style="background-color: rgb(216, 216, 86) ;">Energy</mat-chip>
+                        <mat-chip style="background-color: burlywood;">Malt</mat-chip>
+                        <mat-chip style="background-color: rgb(5, 180, 180);">EK setter Ah</mat-chip>
+                        <mat-chip style="background-color: rgb(65, 216, 65);">EK setter Ahs</mat-chip>
+                    </mat-chip-list>-->
+
+                    </div>
+
+
+
+                    <div *ngFor="let drinks of drinksArray">
+                        <mat-card [style.display]="drinks.company.toLowerCase().includes(searchText|lowercase) ||
+                            drinks.brand_name.toLowerCase().includes(searchText|lowercase) ||
+                            drinks.flavour.toLowerCase().includes(searchText|lowercase) ||
+                            !searchText? 'block':'none' " class="box mat-elevation-z4">
+                            <div fxLayout="column" style="width:100%">
+
+
+
+                                <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
+                                    <div fxLayout="row" fxFlex>
+                                        <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="15px">
+                                            <!-- <b>{{drinks.company}}</b> -->
+                                            <div fxLayout="row wrap">
+                                                <b fxLayoutAlign="start center">{{drinks.brand_name}} - </b>
+                                                <div>
+                                                    <b>{{drinks.flavour}}</b>
+                                                    <b *ngIf="drinks.size !=1">- {{drinks.size}}</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column">
+                                        <mat-slide-toggle [checked]="test.value > 0 ? true : false " ngModel
+                                            name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_avaliability">
+                                        </mat-slide-toggle>
+                                        <mat-form-field style="max-width: 50px;">
+                                            <mat-label>Price $</mat-label>
+                                            <input ngModel #test name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_price"
+                                                type="number" matInput>
+                                        </mat-form-field>
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <!--<app-selection *ngFor='let drinks of drinksArray; trackBy:track' [drinksArray]="drinks"></app-selection> -->
+                </mat-tab>
+
+
+
+                <mat-tab label="Malt">
+                    <div style="width:100%;" fxLayout="column" fxLaoutGap="8px">
+                        <!-- <div>Filters</div>
+                    <mat-chip-list #chipfilter fxLayoutAlign="center center" aria-label="filter selection">
+                        <mat-chip style="background-color: rgb(216, 216, 86) ;">Energy</mat-chip>
+                        <mat-chip style="background-color: burlywood;">Malt</mat-chip>
+                        <mat-chip style="background-color: rgb(5, 180, 180);">EK setter Ah</mat-chip>
+                        <mat-chip style="background-color: rgb(65, 216, 65);">EK setter Ahs</mat-chip>
+                    </mat-chip-list>-->
+
+                    </div>
+
+
+
+
+                    <div *ngFor="let drinks of maltArray">
+                        <mat-card [style.display]="drinks.company.toLowerCase().includes(searchText|lowercase) ||
+                            drinks.brand_name.toLowerCase().includes(searchText|lowercase) ||
+                            drinks.flavour.toLowerCase().includes(searchText|lowercase) ||
+                            !searchText? 'block':'none' " class="box mat-elevation-z4">
+                            <div fxLayout="column" style="width:100%">
+
+
+
+                                <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
+                                    <div fxLayout="row" fxFlex>
+                                        <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="15px">
+                                            <!-- <b>{{drinks.company}}</b> -->
+                                            <div fxLayout="row wrap">
+                                                <b fxLayoutAlign="start center">{{drinks.brand_name}} - </b>
+                                                <div>
+                                                    <b>{{drinks.flavour}}</b>
+                                                    <b *ngIf="drinks.size !=1">- {{drinks.size}}</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column">
+                                        <mat-slide-toggle [checked]="test.value > 0 ? true : false " ngModel
+                                            name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_avaliability">
+                                        </mat-slide-toggle>
+                                        <mat-form-field style="max-width: 50px;">
+                                            <mat-label>Price $</mat-label>
+                                            <input ngModel #test name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_price"
+                                                type="number" matInput>
+                                        </mat-form-field>
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <!--<app-selection *ngFor='let drinks of drinksArray; trackBy:track' [drinksArray]="drinks"></app-selection> -->
+                </mat-tab>
+
+
+
+
+
+
+
+                <mat-tab label="Milks">
+                    <!-- <app-selection *ngFor='let milk of milkArray; trackBy:track' [drinksArray]="milk"></app-selection> -->
+
+
+
+
+
+                    <div *ngFor="let drinks of milkArray">
+                        <mat-card [style.display]="drinks.company.toLowerCase().includes(searchText|lowercase) ||
+                            drinks.brand_name.toLowerCase().includes(searchText|lowercase) ||
+                            drinks.flavour.toLowerCase().includes(searchText|lowercase) ||
+                            !searchText? 'block':'none' " class="box mat-elevation-z4">
+                            <div fxLayout="column" style="width:100%">
+
+
+
+                                <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
+                                    <div fxLayout="row" fxFlex>
+                                        <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="15px">
+                                            <!-- <b>{{drinks.company}}</b> -->
+                                            <div fxLayout="row wrap">
+                                                <b fxLayoutAlign="start center">{{drinks.brand_name}} - </b>
+                                                <div>
+                                                    <b>{{drinks.flavour}}</b>
+                                                    <b *ngIf="drinks.size !=1">- {{drinks.size}}</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column">
+                                        <mat-slide-toggle [checked]="test.value > 0 ? true : false " ngModel
+                                            name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_avaliability">
+                                        </mat-slide-toggle>
+                                        <mat-form-field style="max-width: 50px;">
+                                            <mat-label>Price $</mat-label>
+                                            <input ngModel #test name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_price"
+                                                type="number" matInput>
+                                        </mat-form-field>
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+
+
+
+
+
+
+
+
+                </mat-tab>
+
+                <mat-tab label="Powdered Bev">
+
+
+
+                    <div *ngFor="let drinks of powderedBevArray">
+                        <mat-card [style.display]="drinks.company.toLowerCase().includes(searchText|lowercase) ||
+                            drinks.brand_name.toLowerCase().includes(searchText|lowercase) ||
+                            drinks.flavour.toLowerCase().includes(searchText|lowercase) ||
+                            !searchText? 'block':'none' " class="box mat-elevation-z4">
+                            <div fxLayout="column" style="width:100%">
+
+
+
+                                <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
+                                    <div fxLayout="row" fxFlex>
+                                        <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="15px">
+                                            <!-- <b>{{drinks.company}}</b> -->
+                                            <div fxLayout="row wrap">
+                                                <b fxLayoutAlign="start center">{{drinks.brand_name}} - </b>
+                                                <div>
+                                                    <b>{{drinks.flavour}}</b>
+                                                    <b *ngIf="drinks.size !=1">- {{drinks.size}}</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column">
+                                        <mat-slide-toggle [checked]="test.value > 0 ? true : false " ngModel
+                                            name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_avaliability">
+                                        </mat-slide-toggle>
+                                        <mat-form-field style="max-width: 50px;">
+                                            <mat-label>Price $</mat-label>
+                                            <input ngModel #test name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_price"
+                                                type="number" matInput>
+                                        </mat-form-field>
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+
+
+                </mat-tab> -->
+            </mat-tab-group>
+        </mat-card>
+
+
+        <!-- <div *ngFor="let drinks of testArray; index as i">
+        <mat-card class="box mat-elevation-z4">
+            <div fxLayout="row" fxLayoutGap="10px" style="width:100%">
+                <b fxFlex fxLayoutAlign="start center">{{drinks.name}}</b>
+
+
+                <mat-form-field *ngIf="drinksArray.type != 'chiller'" style="max-width: 60px;">
+                    <mat-label>Price $</mat-label>
+                    <input ngModel name="{{drinks.name}}_price" type="number" matInput>
+                </mat-form-field>
+
+                <mat-button-toggle [style.background]="this.color" (click)="toggleColor()" value="bold">Available
+                </mat-button-toggle>
+            </div>
+
+        </mat-card>
+
+    </div> -->
+
+
+        <div fxHide style="background-color: cornsilk;">
+            <mat-tab-group dynamicHeight>
+                <mat-tab label="Short tab">
+                    <div class="example-small-box mat-elevation-z4">
+                        Small content
+                    </div>
+                </mat-tab>
+                <mat-tab label="Long tab">
+                    <div class="example-large-box mat-elevation-z4">
+                        Large content
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+
+
+
+
+
+        </div>
+
+        <mat-card>
+            <mat-card-title style="color:rosybrown; " >Comments</mat-card-title> 
+            <mat-form-field   style="width:95%">
+
+                <textarea rows="3" ngModel name="Comments" matInput > </textarea>
+
+            </mat-form-field>
+
+
+        </mat-card>
+
+        <mat-card>
+            <div style="width:100%;">
+                <div fxFlex></div>
+                <button fxLayoutAlign="end end" style="max-width: 120px;" [disabled]="!f.form.valid" type="submit"
+                    mat-raised-button color="accent">Submit</button>
+            </div>
+        </mat-card>
+
+    </div>
+</form>
