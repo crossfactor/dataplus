@@ -10,12 +10,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DataService } from './data.service';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import {SelectionComponent} from './dataentry/selection/selection.component';
 import {FilterPipe} from './pipes/filter.pipe';
 
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './login/register/register.component';
+import { SigninComponent } from './login/signin/signin.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -23,7 +27,11 @@ import {FilterPipe} from './pipes/filter.pipe';
     AppComponent,
     DataentryComponent,
     SelectionComponent,
-    FilterPipe
+    LoginComponent,
+    RegisterComponent,
+    SigninComponent,
+    FilterPipe,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +41,8 @@ import {FilterPipe} from './pipes/filter.pipe';
     FormsModule,
     HttpClientModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
+    
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
 
 

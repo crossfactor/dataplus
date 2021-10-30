@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
-
+import { Router } from '@angular/router';
+import { DataService } from './data.service';
 
 
 @Injectable({
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private route: Router, private http: HttpClient,public data: DataService,) { }
   public signedIn: any = new BehaviorSubject <any>(false);
 
 
@@ -23,10 +23,164 @@ export class AuthService {
     }),
   };
 
+  loginData:any;
 
+  LoginHttpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+    
+  };
 
+// Sign Up
+signup(Userusername:string, Userpassword:string) {
+  return this.http.post(
+    environment.base_URL + '_users',
+    {
+      _id: 'org.couchdb.user:' + Userusername,
+      name: Userusername,
+      type: 'user',
+      roles: [],
+      password: Userpassword,
+    },
+    this.post_http_options
+  );
+}
 
+createNewDatabase(email: string, Userpassword: string, Username: string, address:string, phoneNumber:number) {
+  this.http
+    .put(environment.base_URL + email, {}, this.post_http_options)
+    .toPromise()
+    .then((res) => {
+      console.log(res), console.log('first Promise');
+    })
+    .then((func) => {
+      this.http
+        .post(
+          environment.base_URL + email + '/',
+          {
+            _id: 'userdata',
+            email: this.DecodeID(email),
+            name: Username,
+            user:email,
+            address: address,
+            phoneNumber: phoneNumber,
+            
+          },
+          
+          this.post_http_options
+        )
+        .subscribe(
+          (data) => {
+            console.log(data), console.log(2);
+          },
+          (error) => {
+            console.log('something went wrong', error);
+          }
+        );
+    })
+    .then((func) => {
+      this.http
+        .post(
+          environment.base_URL + email + '/',
+          {
+            _id: 'cart',
+            items:[]
+          },
+          
+          this.post_http_options
+        )
+        .subscribe(
+          (data) => {
+            console.log(data), console.log(2);
+          },
+          (error) => {
+            console.log('something went wrong', error);
+          }
+        );
+    })
+    .then((anfunc) => {
+      this.http
+        .put(
+          environment.base_URL + email + '/_security',
+          {
+            
+            admins: { names: ['ashiba', email], roles: ['editor'] },
+            readers: { names: [], roles: ['reader'] },
+          },
+          this.post_http_options
+        )
+        .subscribe((data) => {
+          console.log(data), console.log(3);
+        });
+      console.log('last');
 
+      this.login(email, Userpassword);
+    })
+   
+}
+
+// - sign UP 
+  login(email :string, pass: string) {
+    console.log(email)
+    
+    this.http
+      .post(
+        environment.base_URL + '_session',
+        { name: email, password: pass },
+        this.LoginHttpOptions
+      )
+      .subscribe(
+        (data) => {
+          this.loginData = data;
+          if (
+            this.loginData.ok == true ||
+            localStorage.getItem('signedIN') == 'yes'
+          ) {
+            this.data.initializeDb(email, pass), 
+            this.setLocalIN(email, pass);
+            this.data.testSign.next(true);
+            console.log('logged in');
+            
+            if (this.route.url === "/login/signin" || this.route.url === "/login/register"){
+              this.route.navigate(['/'])
+              
+            }
+            
+          }
+        },
+
+        (error:any) => {
+          if (error.statusText == 'Unauthorized') {
+            console.log('Wrong password', error);
+          }
+        }
+      );
+    
+    //this.data.initializeDb(email,pass)
+  }
+
+  setLocalIN(user:string, pass:string) {
+    localStorage.setItem('signedIn', 'yes');
+    localStorage.setItem('username', user);
+    localStorage.setItem('password', pass);
+    this.signedIn = "true";
+  }
+
+  encodeID(email:string) {
+    
+    return email
+      .replace(/@/gi, 'xcdfxffp')
+      .toLowerCase()
+      .replace(/\./gi, 'apmfng');
+  }
+
+  DecodeID(email:string) {
+    return email
+      .replace(/xcdfxffp/gi, '@')
+      .toLowerCase()
+      .replace(/apmfng/gi, '.');
+  }
 
 }
 

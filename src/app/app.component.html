@@ -32,10 +32,13 @@
 
 </mat-toolbar>
 
-
-<div style="background-color: rgb(126, 150, 142); " fxLayout="column" fxLayoutAlign="start center">
+<div style="height:100%;background-color: lightslategray;">
+<div fxLayout="column" fxLayoutAlign="start center">
   <div style="width:95%">
     <div style="height:15px"></div>
-    <app-dataentry></app-dataentry>
+    <!-- <app-dataentry></app-dataentry> -->
+    <router-outlet></router-outlet>
+
   </div>
+</div>
 </div>

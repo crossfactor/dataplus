@@ -1,0 +1,76 @@
+<div fxLayoutAlign="center" fxFlex style="width:100%;height:100%">
+<mat-card  class=' mat-elevation-z5' style="width:85%; margin-top:100px" [ngStyle.gt-xs] ="{'width': '350px','margin-top':'230px'}">
+    <div class="box" style = "width:300px" >
+
+        <div class="title"  style=" width:100% ; margin-top:-10px" >Create Account</div>
+        
+    </div>
+
+    <div fxLayoutGap="15px" fxLayout="column">
+        <form [formGroup]="userForm" fxLayoutAlign="center center" fxLayout="column" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+            <mat-form-field style="max-width:80%">
+                <mat-label >Email</mat-label>
+                <input formControlName="email" required  type="text"  name="email" matInput
+                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                placeholder="john@smith.com">
+               <!-- <mat-error *ngIf="userForm.get('email').hasError('required')"
+                >Email is required</mat-error>
+              <mat-error *ngIf="userForm.get('email').hasError('email')"
+                >Please enter a valid email address
+              </mat-error> -->
+            </mat-form-field>
+            
+
+
+            <mat-form-field style="max-width:80%">
+                <mat-label matInput>Name </mat-label>
+                <input required formControlName="name" type="name" name="name" matInput placeholder="ie. John Smith">
+               <!-- <mat-error *ngIf="userForm.get('name').hasError('required')" 
+                >A name is required</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field style="max-width:80%">
+                <mat-label>Enter your password</mat-label>
+                <input required formControlName="password" type="password"  name="password" matInput placeholder="Password" matInput
+                    [type]="hide ? 'password' : 'text'">
+                <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon> 
+                </button> 
+                <!-- <mat-error *ngIf ="userForm.get('password').hasError('minlength')">Password must be 6 characters</mat-error> -->
+                <mat-hint  align="start"><strong  [hidden]="loginForm.value.password.length > 5 ? true : false"   >at least 6 Chars</strong> </mat-hint>
+                <mat-hint align="end"><a [ngStyle]="{'color':loginForm.value.password.length > 5 ? 'green' : 'red'}">{{loginForm.value.password.length}}</a></mat-hint>
+            </mat-form-field>
+
+            <mat-form-field style="max-width:80%">
+                <mat-label matInput>Address</mat-label>
+                <input  type="text"  name="address" matInput placeholder="Address ( Street , City, State)">
+            </mat-form-field>
+
+            <mat-form-field style="max-width:80%">
+                <mat-label matInput>Area</mat-label>
+                <input  type="text"  name="area" matInput placeholder="Area">
+            </mat-form-field>
+
+            <mat-form-field style="max-width:80%">
+                <mat-label matInput>Contact Number</mat-label>
+                <input type="tel"  name="contactNumber" matInput placeholder="ie. 868 555 5555">
+            </mat-form-field>
+
+            <div style="width: 100%;">
+                <div fxFlex></div>
+                <button [disabled]="!loginForm.form.valid" type="submit" mat-raised-button
+                    color="accent">Submit</button>
+            </div>
+        </form>
+        
+        <mat-divider [inset]="true"></mat-divider>
+        <div style="width: 100%;">
+
+            <a [routerLink]="['/login/signin']" fxLayoutAlign="end"  style=" width:100% ;">Back to Login</a>
+
+        </div>
+    </div>
+
+</mat-card>
+</div>
