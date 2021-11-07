@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, observable } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -24,6 +24,8 @@ export class AuthService {
   };
 
   loginData:any;
+
+  public roles:any = new BehaviorSubject <any>({admin:false});
 
   LoginHttpOptions = {
     headers: new HttpHeaders({
@@ -120,19 +122,25 @@ createNewDatabase(email: string, Userpassword: string, Username: string, address
    
 }
 
-// - sign UP 
+// end - sign UP 
   login(email :string, pass: string) {
-    console.log(email)
-    
     this.http
       .post(
-        environment.base_URL + '_session',
+        environment.baseDatabaseURL + '_session',
         { name: email, password: pass },
         this.LoginHttpOptions
       )
       .subscribe(
         (data) => {
           this.loginData = data;
+          this.loginData.roles.forEach(element => {
+            if (element ="admin"){
+             this.roles.next({admin:true})    
+
+            }
+            
+          });
+          console.log(this.loginData.roles)
           if (
             this.loginData.ok == true ||
             localStorage.getItem('signedIN') == 'yes'
@@ -156,16 +164,47 @@ createNewDatabase(email: string, Userpassword: string, Username: string, address
           }
         }
       );
-    
+    console.log(this.roles)
     //this.data.initializeDb(email,pass)
   }
+
+
+  logout() {
+    this.data.destroy();
+    this.data.userdata.next({ name: 'Guest', pic: './assets/cup.png',points:0, level:1})
+    this.data.testSign.next(false);
+   
+    this.data.logoutCartData();
+
+    this.setLocalOUT();
+    this.route.navigate(['/login/signin'])
+  }
+
+  loadAdmin(){
+    console.log(this.roles)
+    this.route.navigate(['/admin'])}
+
+
+
+
 
   setLocalIN(user:string, pass:string) {
     localStorage.setItem('signedIn', 'yes');
     localStorage.setItem('username', user);
     localStorage.setItem('password', pass);
-    this.signedIn = "true";
+    this.signedIn.next(true) ;
   }
+
+
+  setLocalOUT() {
+    localStorage.setItem('signedIn', 'no');
+    localStorage.setItem('username', null);
+    localStorage.setItem('password', null);
+    this.signedIn.next(false) ;
+    this.roles.next({admin:false})
+  }
+
+
 
   encodeID(email:string) {
     

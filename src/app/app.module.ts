@@ -8,7 +8,12 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { AuthGuard } from './auth-guard.service';
+import { AdminGuardService } from './admin-guard.service';
+import { AuthService } from './auth.service';
 import { DataService } from './data.service';
+
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -20,6 +25,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { SigninComponent } from './login/signin/signin.component';
 import { AdminComponent } from './admin/admin.component';
+import { HeaderComponent } from './Shared/header/header.component';
+
 
 
 @NgModule({
@@ -31,6 +38,7 @@ import { AdminComponent } from './admin/admin.component';
     RegisterComponent,
     SigninComponent,
     FilterPipe,
+    HeaderComponent,
     AdminComponent
   ],
   imports: [
@@ -47,7 +55,7 @@ import { AdminComponent } from './admin/admin.component';
 
 
   ],
-  providers: [DataService],
+  providers: [DataService,AuthService,AuthGuard,AdminGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -41,9 +41,9 @@
         <mat-divider [inset]="true"></mat-divider>
         <div style="width: 100%;">
 
-            <a [routerLink]="['/login/register']" fxFlex>Register Account</a>
+            <a [routerLink]="['/login/register']" fxFlex></a>
             
-            <a>Forgot Password</a>
+            <a (click) ="logout()">Forgot Password</a>
         </div>
     </div>
     

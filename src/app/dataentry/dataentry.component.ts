@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service'
 import { SlideInOutAnimation } from '../animations';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -14,6 +15,12 @@ import { AuthService } from '../auth.service';
 export class DataentryComponent implements OnInit {
 
   @Output() valueChange = new EventEmitter();
+
+  public storeForm: FormGroup;
+
+
+
+
 
   color: string;
   storeName: string;
@@ -139,12 +146,30 @@ export class DataentryComponent implements OnInit {
   arrays: any;
 
 
-  constructor(public Auth : AuthService, public dataService: DataService, private snackBar: MatSnackBar) { }
+  constructor(public Auth : AuthService, public dataService: DataService, private snackBar: MatSnackBar) {
+    this.storeForm = new FormGroup({
+      sname: new FormControl(),
+      ctype: new FormControl(),
+      saddress: new FormControl(),
+      sarea: new FormControl(),
+      scontact: new FormControl(),
+      stel: new FormControl(),
+    })
+    this.send()
+   }
 
   ngOnInit(): void {
   }
 
-   
+  send(){
+console.log(this.storeForm.value)
+
+  }
+
+
+   logout(){this.Auth.logout()}
+
+   loadAdmin(){this.Auth.loadAdmin()}
   
    getLocation(): void {
     
@@ -220,6 +245,7 @@ export class DataentryComponent implements OnInit {
 
     this.dateNtimeEnd = + new Date();
     console.log(f.form.value);
+    console.log(this.storeForm.value)
     this.openSnackBar(this.dateNtimeStart,this.dateNtimeEnd);
     //console.log(this.dateNtimeStart, this.dateNtimeEnd);
     // console.log(this.lat, this.long, this.accu);
@@ -232,7 +258,7 @@ export class DataentryComponent implements OnInit {
     this.arrays.latitude = this.lat;
     this.arrays.longitude = this.long;
     this.arrays.locationAccuracy = this.accu;
-    this.dataService.postData(this.arrays);
+    //un comment me, post data to db // this.dataService.postData(this.arrays);
 
     this.dateNtimeStart = 0;
     this.dateNtimeEnd = 0;

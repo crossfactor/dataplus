@@ -48,8 +48,8 @@ initializeDb(email :string, pass:string) {
      ':' +
      pass +
      '@'+environment.database_url +
-     'userdb-' + this.hexer(email);
-
+     email;
+    
    if (!this.isInstantiated) {
      this.db = new PouchDB(email);
      this.isInstantiated = true;
@@ -102,7 +102,7 @@ initializeDb(email :string, pass:string) {
        }
      });
      this.getUserDoc()
-   this.emitPosts();
+   //this.emitPosts();
  }
 
 
@@ -129,7 +129,7 @@ hexer(email: string) {
 }
 
 getUserDoc() {
- this.db.get('userData').then((doc:any) => {
+ this.db.get('userdata').then((doc:any) => {
    this.userdata.next(doc);
  });
 }

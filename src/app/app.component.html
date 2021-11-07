@@ -1,38 +1,7 @@
-<mat-toolbar class='sticky1 mat-elevation-z4' style="background-image: url(assets/seamlessA.jpg); height : 55px">
+<app-header></app-header>
 
 
-  <div style="height:80%; width:100% ;margin:10% ; position:relative" fxLayout="column" fxLayoutAlign="center">
-
-    <div fxLayoutAlign="center" style="height:100%;">
-      <img style="width:90px" src="../assets/dp2.png" alt="Dataplus">
-    </div>
-
-
-  </div>
-
-  <button fxHide fxHide.gt-sm mat-icon-button [matMenuTriggerFor]="appMenu">
-
-    <mat-icon>menu</mat-icon>
-  </button>
-
-  <mat-menu #appMenu="matMenu" fxFlex fxLayout fxLayoutAlign="end">
-    <span>
-      <div style=" width: 100%" *ngFor='let menu of menus ; let i = index'>
-        <button fxLayoutAlign="center center" style="color: black" class="details-text" [routerLink]="menu.name"
-          routerLinkActive="active" mat-menu-item>{{menu.name}}</button>
-      </div>
-      <!-- <div><button fxLayoutAlign = "center center" style="background-color: lightgrey" class="details-text"
-        mat-menu-item>Demo</button>
-
-      </div> -->
-    </span>
-
-  </mat-menu>
-
-
-</mat-toolbar>
-
-<div style="height:100%;background-color: lightslategray;">
+<div style="height:100%;background-color: rgb(46, 43, 43);">
 <div fxLayout="column" fxLayoutAlign="start center">
   <div style="width:95%">
     <div style="height:15px"></div>

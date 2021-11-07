@@ -38,6 +38,8 @@ export class SigninComponent implements OnInit {
   constructor(public auth :AuthService, public data :DataService) { }
 
   ngOnInit(): void {
+
+
    
   }
 
@@ -45,9 +47,10 @@ export class SigninComponent implements OnInit {
     this.auth.login(this.auth.encodeID(loginForm.value.userName),loginForm.value.password)
     //this.username = loginForm.controls['username'].value
     
-
-
   }
+
+
+  logout(){this.auth.logout()}
 
 }
 

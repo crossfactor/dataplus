@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'dataplus';
 
-menus : any [] = [{name:"option"} ,{name:"optionB"}] 
+
 
 }

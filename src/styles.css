@@ -2,3 +2,34 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@font-face {
+    font-family: "IceMirrorInWinterKei";
+    src: url(./assets/fonts/IceMirrorInWinterKei-d99LV.ttf);
+  }
+
+  @font-face {
+    font-family: "FirstSnow";
+    src: url(./assets/fonts/Firstsnow-nRYmg.ttf);
+  }
+
+  @font-face {
+    font-family: "WinterKei";
+    src: local("WinterKei"), url(./assets/fonts/WinterKei-eZZRl.ttf);
+  }
+
+  @font-face {
+    font-family: "PaytoneOne";
+    src: local("PaytoneOne"),
+      url(./assets/fonts/PaytoneOne-Regular.ttf);
+  }
+
+
+
+  .chillerText{
+      font-family: "WinterKei";
+      font-weight: 100;
+      -webkit-text-stroke-width: .3px;
+  -webkit-text-stroke-color: rgb(43, 46, 226);
+  
+  }
