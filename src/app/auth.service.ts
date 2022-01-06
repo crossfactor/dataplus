@@ -140,7 +140,7 @@ createNewDatabase(email: string, Userpassword: string, Username: string, address
             }
             
           });
-          console.log(this.loginData.roles)
+          
           if (
             this.loginData.ok == true ||
             localStorage.getItem('signedIN') == 'yes'
@@ -148,7 +148,7 @@ createNewDatabase(email: string, Userpassword: string, Username: string, address
             this.data.initializeDb(email, pass), 
             this.setLocalIN(email, pass);
             this.data.testSign.next(true);
-            console.log('logged in');
+            
             
             if (this.route.url === "/login/signin" || this.route.url === "/login/register"){
               this.route.navigate(['/'])
@@ -164,7 +164,7 @@ createNewDatabase(email: string, Userpassword: string, Username: string, address
           }
         }
       );
-    console.log(this.roles)
+    
     //this.data.initializeDb(email,pass)
   }
 
@@ -181,7 +181,7 @@ createNewDatabase(email: string, Userpassword: string, Username: string, address
   }
 
   loadAdmin(){
-    console.log(this.roles)
+    
     this.route.navigate(['/admin'])}
 
 

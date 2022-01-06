@@ -8,6 +8,7 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DatePipe } from '@angular/common';
 
 import { AuthGuard } from './auth-guard.service';
 import { AdminGuardService } from './admin-guard.service';
@@ -52,10 +53,16 @@ import { HeaderComponent } from './Shared/header/header.component';
     ReactiveFormsModule,
     
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+         ServiceWorkerModule.register('ngsw-worker.js', {
+           enabled: environment.production,
+           // Register the ServiceWorker as soon as the app is stable
+           // or after 30 seconds (whichever comes first).
+           registrationStrategy: 'registerWhenStable:30000'
+         }),
 
 
   ],
-  providers: [DataService,AuthService,AuthGuard,AdminGuardService],
+  providers: [DataService,AuthService,AuthGuard,AdminGuardService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -24,12 +24,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       url(./assets/fonts/PaytoneOne-Regular.ttf);
   }
 
+ 
 
+  @font-face {
+    font-family: "Millenia";
+    src: local("Millenia"),
+      url(./assets/fonts/Millenia.ttf);
+  }
+
+  @font-face {
+    font-family: "FinFraktur";
+    src: local("FinFraktur"),
+      url(./assets/fonts/FinFraktur.ttf);
+  }
 
   .chillerText{
       font-family: "WinterKei";
       font-weight: 100;
       -webkit-text-stroke-width: .3px;
   -webkit-text-stroke-color: rgb(43, 46, 226);
-  
-  }
+    }
+
+    .headingText{
+        font-family: "PaytoneOne";
+        font-weight: 300;
+            }

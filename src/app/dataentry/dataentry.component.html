@@ -5,7 +5,7 @@
         <mat-card>
 
             <mat-card-content>
-                <mat-card-title>Store Information</mat-card-title>
+                <mat-card-title class="headingText" style="font-size: xx-large;">Store Information</mat-card-title>
 
                 <div fxLayout="column" fxLayoutGap="8px">
                     <mat-form-field style="max-width:50%">
@@ -60,7 +60,8 @@
                     </div>
                     <div fxLayout="row" fxLayoutGap="30px">
 
-                        <button fxLayoutAlign="center center" fxLayout="column" mat-fab type="button" style="background-color: rgb(255, 243, 176);" (click)=getLocation()>
+                        <button fxLayoutAlign="center center" fxLayout="column" mat-fab type="button"
+                            style="background-color: rgb(255, 243, 176);" (click)=getLocation()>
                             <!-- <mat-icon>location_on</mat-icon> -->
                             <div style="height:9px"></div>
                             <div style="width:100%;">
@@ -91,20 +92,12 @@
 
     <mat-card style="
     background: rgb(251,251,251);
-background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgba(31,98,193,1) 63%, rgba(0,212,255,1) 100%);
-    
-    
-    ">
+background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgba(31,98,193,1) 63%, rgba(0,212,255,1) 100%);">
         <mat-card-title class="chillerText" (click)="toggleShowDiv('divA')" style="cursor:pointer; font-size:42px; color: rgba(24, 24, 155, 1);
-        
-        
-        
-        ">CHILLERS</mat-card-title>
-        
-        
+         ">CHILLERS</mat-card-title>
 
         <div [@slideInOut]="animationState"
-            style="overflow: hidden; padding-top :0; background-color: rgb(118, 201, 204);">
+            style="overflow: hidden; padding-top :0; background-color: rgb(118, 201, 204,.3);">
 
 
 
@@ -136,12 +129,12 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
         </div>
     </mat-card>
 
-    <form #f="ngForm" (ngSubmit)="OnSubmit(f)">
+    <form  #f="ngForm" (ngSubmit)="OnSubmit(f)">
 
 
         <mat-card>
             <mat-form-field appearance="outline">
-                <mat-label>Filter</mat-label>
+                <mat-label class="headingText">Filter</mat-label>
                 <input matInput [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
                 <button mat-button *ngIf="searchText" matSuffix mat-icon-button aria-label="Clear"
                     (click)="searchText=''">
@@ -316,26 +309,13 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
 
 
-
-
-
-
-
-
                     <!--<app-selection *ngFor='let drinks of drinksArray; trackBy:track' [drinksArray]="drinks"></app-selection> -->
                 </mat-tab>
 
 
 
-
-
-
-
                 <mat-tab label="Milks">
                     <!-- <app-selection *ngFor='let milk of milkArray; trackBy:track' [drinksArray]="milk"></app-selection> -->
-
-
-
 
 
                     <div *ngFor="let drinks of milkArray">
@@ -482,9 +462,9 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
 
         </div>
-
+        <div style="height:20px"></div>
         <mat-card>
-            <mat-card-title style="color:rosybrown; ">Comments</mat-card-title>
+            <mat-card-title class="headingText" style="color:darkturquoise; ">Comments</mat-card-title>
             <mat-form-field style="width:95%">
 
                 <textarea rows="3" ngModel name="Comments" matInput> </textarea>
@@ -494,11 +474,16 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
         </mat-card>
 
+        <div style="height:20px"></div>
+
         <mat-card>
             <div style="width:100%;">
+                <button  (click)="dataService.getSku()" style="max-width: 120px;" 
+                    type="button" mat-raised-button color="warn">getSku</button>
+
                 <div fxFlex></div>
-                <button fxLayoutAlign="end end" style="max-width: 120px;" [disabled]="!f.form.valid" type="submit"
-                    mat-raised-button color="accent">Submit</button>
+                <button fxLayoutAlign="end end" style="max-width: 120px;" [disabled]="!f.form.valid || !storeForm.valid"
+                    type="submit" mat-raised-button color="accent">Submit</button>
             </div>
         </mat-card>
     </form>

@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter, NgZone } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import  PouchDB from 'pouchdb';
 import { Subject, BehaviorSubject} from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -29,6 +29,19 @@ toggledata : boolean = false;
     pic: './assets/avatar.png',
   });
 
+  public skuData: any = new BehaviorSubject<any>({
+    name: 'Guest',
+    pic: './assets/avatar.png',
+  });
+
+
+  HttpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Basic '+ environment.cdb_a
+    }),
+  };
+
 
   public testSign: any = new BehaviorSubject<any>(false);
  
@@ -41,7 +54,7 @@ toggledata : boolean = false;
 postData (data){this.db.post(data)};
 
 initializeDb(email :string, pass:string) {
-  console.log(email)
+  
    var remoteUrl =
      'https://' +
      email +
@@ -134,7 +147,28 @@ getUserDoc() {
  });
 }
 
+
+
+getSku(){
+  
+  
+
+  this.http.get(environment.sku_url, this.HttpOptions).subscribe((data) => {
+   
+    console.log(data)  
+
+      });
+      //this.skuData.next(dataRows);
+    
+    //console.log(this.productData)
+  }
+
+
 }
+
+
+
+
 
 
 

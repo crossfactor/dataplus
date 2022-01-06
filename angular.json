@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "testop": {
+    "dataplus": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -28,13 +28,16 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/assets/fonts"
+              "src/assets/fonts",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -73,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "testop:build:production"
+              "browserTarget": "dataplus:build:production"
             },
             "development": {
-              "browserTarget": "testop:build:development"
+              "browserTarget": "dataplus:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "testop:build"
+            "browserTarget": "dataplus:build"
           }
         },
         "test": {
@@ -96,7 +99,8 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -108,5 +112,5 @@
       }
     }
   },
-  "defaultProject": "testop"
+  "defaultProject": "dataplus"
 }

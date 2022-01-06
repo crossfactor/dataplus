@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngOnInit() {this.auth.signedIn.subscribe(arg => {
     
     this.isAuth = arg;
-    console.log(this.isAuth)
+    
     if (arg == false) {
 
     if (localStorage.getItem('signedIn') == 'yes') {
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         localStorage.getItem('username'),
         localStorage.getItem('password')
       );
-      console.log(this.isAuth)
+      
           }
         } 
       
@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(){
       this.auth.roles.subscribe(admin => {this.isAdmin = admin.admin ;
-      console.log(this.isAdmin,"admin sub")
+      
       this.menus = [{name:"Logout",enabled:true,click:"logout"} ,{name:"Admin",enabled:true,click:"adminRoute"}]
       })}
 
