@@ -35,6 +35,7 @@ export class DataentryComponent implements OnInit {
   dateNtime3: number;
   searchText: string;
   animationState = 'out';
+  
 
   chanelTypeArray: any[] = [
     { name: 'Wholeseller' },
@@ -117,31 +118,8 @@ export class DataentryComponent implements OnInit {
       flavour: 'Fruit Punch',
       category: 'Drink',
       sub_cat: 'Energy Drink',
-    },
-    {
-      company: 'Blue Waters Products Ltd',
-      brand_name: 'Stamina',
-      size: '500ml',
-      flavour: 'Grape',
-      category: 'Drink',
-      sub_cat: 'Energy Drink',
-    },
-    {
-      company: 'Blue Waters Products Ltd',
-      brand_name: 'Stamina',
-      size: '500ml',
-      flavour: 'Lemon Lime',
-      category: 'Drink',
-      sub_cat: 'Energy Drink',
-    },
-    {
-      company: 'Blue Waters Products Ltd',
-      brand_name: 'Stamina',
-      size: '500ml',
-      flavour: 'Mixed Berry',
-      category: 'Drink',
-      sub_cat: 'Energy Drink',
-    },
+    }
+    
   ];
 
   milkArray: any[] = [
@@ -319,7 +297,16 @@ export class DataentryComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  public Edrinks :[] = [];
+  public Chillers:[] =[];
+
+  ngOnInit(): void {
+    this.dataService.getEdrinks();
+
+    this.dataService.all_products.subscribe(arg => { this.Edrinks = arg.edrinks ; this.Chillers = arg.chillers});
+    
+
+  }
 
   getLocation(): void {
     this.dateNtimeStart = +new Date();
@@ -386,8 +373,8 @@ export class DataentryComponent implements OnInit {
     this.dateNtimeEnd = +new Date();
     console.log(f.form.value);
     console.log(this.storeForm.value);
-
-    this.storeForm.value.sid = this.datepipe.transform(this.dateNtimeStart, 'yyyymmdd')+"8681420"
+    console.log(this.Auth.DecodeID(localStorage.getItem('username')))
+    console.log(this.storeForm.value.sid = this.datepipe.transform(this.dateNtimeStart, 'yyyymmdd')+"8681420")
     this.openSnackBar(this.dateNtimeStart, this.dateNtimeEnd);
     //console.log(this.dateNtimeStart, this.dateNtimeEnd);
     // console.log(this.lat, this.long, this.accu);
@@ -398,7 +385,8 @@ export class DataentryComponent implements OnInit {
     this.arrays.latitude = this.lat;
     this.arrays.longitude = this.long;
     this.arrays.locationAccuracy = this.accu;
-    //un comment me, post data to db // this.dataService.postData(this.arrays);
+    //un-comment me, post data to db // this.dataService.postData(this.arrays);
+    console.log(this.arrays)
 
     this.dateNtimeStart = 0;
     this.dateNtimeEnd = 0;

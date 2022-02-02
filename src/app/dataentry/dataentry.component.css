@@ -32,3 +32,21 @@
     padding-bottom: 5px;
     border-radius: 8px;
   }
+
+  ::ng-deep .mat-tab-label {
+    font-size: 2.4vw !important;
+    font-weight: 700;
+}
+
+
+::ng-deep .mat-tab-label-active {
+  color:green;
+  background-color: rgba(10, 10, 240, .08);
+  
+  }
+
+::ng-deep .mat-ink-bar {
+  background-color: red;
+}
+
+.labeltext{font-size: 2.5vw}

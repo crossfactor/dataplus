@@ -4,7 +4,7 @@
 
 <div fxFlex="20">
 
-  <button *ngIf="isAuth" matTooltip="Profile"  mat-icon-button >
+  <button routerLink="/profile" *ngIf="isAuth" matTooltip="Profile"  mat-icon-button >
     <mat-icon [ngStyle] = "{'color': isAuth == true ? 'black': '#B33F40'}"  fxFlex fxLayoutAlign="center center">account_circle</mat-icon>
   </button>
 

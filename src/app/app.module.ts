@@ -27,6 +27,8 @@ import { RegisterComponent } from './login/register/register.component';
 import { SigninComponent } from './login/signin/signin.component';
 import { AdminComponent } from './admin/admin.component';
 import { HeaderComponent } from './Shared/header/header.component';
+import { ProfileComponent } from './profile/profile.component';
+import { HistoryComponent } from './history/history.component';
 
 
 
@@ -40,7 +42,9 @@ import { HeaderComponent } from './Shared/header/header.component';
     SigninComponent,
     FilterPipe,
     HeaderComponent,
-    AdminComponent
+    AdminComponent,
+    ProfileComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

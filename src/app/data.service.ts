@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 
 
 
+
 @Injectable({
   // we declare that this service should be created
   // by the root application injector.
@@ -42,7 +43,7 @@ toggledata : boolean = false;
     }),
   };
 
-
+  public all_products: any = new BehaviorSubject<any>([{id:1111}]);
   public testSign: any = new BehaviorSubject<any>(false);
  
   public db: any;
@@ -155,13 +156,35 @@ getSku(){
 
   this.http.get(environment.sku_url, this.HttpOptions).subscribe((data) => {
    
-    console.log(data)  
-
-      });
-      //this.skuData.next(dataRows);
+    //console.log(data)  
+    this.skuData.next(data)
     
+    
+    
+    
+  });
+      //this.skuData.next(dataRows);
+      this.skuData.subscribe(arg => console.log(arg));
     //console.log(this.productData)
   }
+
+
+  getEdrinks(){
+  
+  
+
+    this.http.get(environment.products_url, this.HttpOptions).subscribe((data) => {
+      this.all_products.next(data)
+      console.log(data) 
+     
+  
+        });
+        //this.skuData.next(dataRows);
+      
+      //console.log(this.productData)
+    }
+
+
 
 
 }

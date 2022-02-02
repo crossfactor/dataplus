@@ -1,19 +1,102 @@
-
-<div fxLayoutAlign="center" style="width:100%" >
-
-
-<mat-card fxLayoutAlign="center" style="background-color: darkkhaki; width:80%">
+<div fxLayoutGap="15px" fxLayout="column" fxLayoutAlign="center center" style="width:100%">
 
 
-    <button (click)="add_user()" type="button"
-    mat-raised-button color="warn">Create new user</button>
+    <mat-card style="background-color: darkkhaki; width:80%">
+
+
+        <button (click)="add_user()" type="button" mat-raised-button color="warn">Create new user</button>
 
 
 
 
-</mat-card>
+    </mat-card>
+
+    <mat-card>
 
 
+        <input [(ngModel)]="fileInput" type="file" (change)="changeListener($event.target.files)" accept=".csv">
+
+    </mat-card>
+
+    <mat-card>
+        <div style="width:100%;">
+            <button (click)="dataService.getSku();checkTest()" style="max-width: 120px;" type="button" mat-raised-button
+                color="warn">getSku</button>
+
+
+        </div>
+    </mat-card>
+
+    <!-- Test Block start-->
+    <div *ngIf="checked == true">
+
+        <mat-card>
+            <p>{{findTest("1112")}}</p>
+
+        </mat-card>
+
+
+    </div>
+    <!-- Test Block end-->
+
+
+
+
+    <div style="background-color: darkgreen;width:80%">
+        <div fxlayoutGap="10px">
+            <div>Products</div>
+
+            <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center"
+                *ngFor="let product of dataTest.sku">
+                <mat-card style="width: 90%;">
+                    <form #skuForm=ngForm (ngSubmit)="OnSubmit(skuForm)">
+                        <div *ngFor="let item of productFields" fxLayout="column">
+
+                            <div fxLayoutGap="5px" fxLayoutAlign="row">
+                                <div>{{item.field}} :</div>
+                                <input style="width: 50%;"  [(ngModel)]="product[item.field]" name="{{item.field}}" matInput>
+                            </div>
+                            <!--
+                        <div fxLayoutGap="5px" fxLayoutAlign="row">
+                            <div>Name :</div>
+                            <input style="width: 50%;" ngModel name="{{product.name}}" matInput [disabled]="editable" [value]="product.name">
+                        </div>
+                        
+                        <div fxLayoutGap="5px" fxLayoutAlign="row">
+                            <div>Company :</div>
+                            <input style="width: 50%;" ngModel name="{{product.Company}}" matInput [disabled]="editable" [value]="product.Company">
+                        </div>
+                        
+                        <div fxLayoutGap="5px" fxLayoutAlign="row">
+                            <div>Type :</div>
+                            <input style="width: 50%;" ngModel name="{{product.type}}" matInput [disabled]="editable" [value]="product.type">
+                        </div>
+                        
+                        <div fxLayoutGap="5px" fxLayoutAlign="row">
+                            <div>Size :</div>
+                            <input style="width: 50%;" ngModel name="{{product.size}}" matInput [disabled]="editable" [value]="product.size">
+                        </div>
+
+                        <div fxLayoutGap="5px" fxLayoutAlign="row">
+                            <div>Measurement :</div>
+                            <input style="width: 50%;" ngModel name="{{product.measurement}}" matInput [disabled]="editable" [value]="product.measurement">
+                        </div>
+
+                        -->
+
+                        </div>
+
+                        <mat-slide-toggle [ngModel]="editable" [ngModelOptions]="{standalone: true}">Edit toggle
+                        </mat-slide-toggle>
+                        <button type="submit" mat-raised-button color="accent"> Update</button>
+                    </form>
+                </mat-card>
+            </div>
+
+
+
+        </div>
+    </div>
 
 
 

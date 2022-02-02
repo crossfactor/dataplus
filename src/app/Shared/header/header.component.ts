@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isAuth = false;
   isAdmin = false;
 
-  menus : any [] = [{name:"Logout",enabled:true,click:"logout"} ,{name:"Admin",enabled:false,click:"adminRoute"}] 
+  menus = [{name:"Admin",enabled:false,click:"adminRoute"},{name:"History",enabled:false,click:"historyRoute"},{name:"Logout",enabled:true,click:"logout"} ]
 
   ngOnInit() {this.auth.signedIn.subscribe(arg => {
     
@@ -22,15 +22,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     
     if (arg == false) {
 
-    if (localStorage.getItem('signedIn') == 'yes') {
-      this.isAuth = true;
-      this.auth.login(
+      if (localStorage.getItem('signedIn') == 'yes') {
+        this.isAuth = true;
+        this.auth.login(
         localStorage.getItem('username'),
         localStorage.getItem('password')
-      );
-      
-          }
-        } 
+          );
+        }
+      } 
       
 
         } )
@@ -44,7 +43,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(){
       this.auth.roles.subscribe(admin => {this.isAdmin = admin.admin ;
       
-      this.menus = [{name:"Logout",enabled:true,click:"logout"} ,{name:"Admin",enabled:true,click:"adminRoute"}]
+      this.menus = [{name:"Admin",enabled:true,click:"adminRoute"},{name:"History",enabled:true,click:"historyRoute"},{name:"Logout",enabled:true,click:"logout"} ]
       })}
 
 
@@ -58,6 +57,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.route.navigate(['/admin'])
     }
 
+    profileRoute(){
+      this.route.navigate(['/profile'])
+    }
 
+    historyRoute(){
+      this.route.navigate(['/history'])
+    }
 
 }

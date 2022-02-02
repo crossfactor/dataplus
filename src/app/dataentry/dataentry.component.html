@@ -88,10 +88,10 @@
     <!-- Store card info end -->
 
     <!-- Chillers section-->
+    <form  #f="ngForm" (ngSubmit)="OnSubmit(f)">
 
-
-    <mat-card style="
-    background: rgb(251,251,251);
+    <mat-card 
+    style=" background: rgb(251,251,251);
 background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgba(31,98,193,1) 63%, rgba(0,212,255,1) 100%);">
         <mat-card-title class="chillerText" (click)="toggleShowDiv('divA')" style="cursor:pointer; font-size:42px; color: rgba(24, 24, 155, 1);
          ">CHILLERS</mat-card-title>
@@ -103,7 +103,7 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
             <mat-divider></mat-divider>
             <div style="height:10px"></div>
-            <div *ngFor="let drinks of chillersArray">
+            <div *ngFor="let chiller of Chillers">
                 <mat-card class="chillerBox mat-elevation-z4">
                     <div fxLayout="column" style="width:100%">
 
@@ -111,12 +111,12 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
                         <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
                             <div fxLayout="row" fxFlex fxLayoutGap="10px">
-                                <b fxLayoutAlign="start center">{{drinks.company}}</b>
+                                <b fxLayoutAlign="start center">{{chiller.company}}</b>
                             </div>
 
 
 
-                            <mat-slide-toggle ngModel name="{{drinks.company}}_{{drinks.brand_name}}_avaliability">
+                            <mat-slide-toggle ngModel name="{{chiller.company_code}}">
                             </mat-slide-toggle>
 
 
@@ -129,8 +129,8 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
         </div>
     </mat-card>
 
-    <form  #f="ngForm" (ngSubmit)="OnSubmit(f)">
-
+   
+    <div style="height:15px"></div>
 
         <mat-card>
             <mat-form-field appearance="outline">
@@ -180,20 +180,8 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
 
                 <mat-tab label="E_Drinks">
-                    <div style="width:100%;" fxLayout="column" fxLaoutGap="8px">
-                        <!-- <div>Filters</div>
-                    <mat-chip-list #chipfilter fxLayoutAlign="center center" aria-label="filter selection">
-                        <mat-chip style="background-color: rgb(216, 216, 86) ;">Energy</mat-chip>
-                        <mat-chip style="background-color: burlywood;">Malt</mat-chip>
-                        <mat-chip style="background-color: rgb(5, 180, 180);">EK setter Ah</mat-chip>
-                        <mat-chip style="background-color: rgb(65, 216, 65);">EK setter Ahs</mat-chip>
-                    </mat-chip-list>-->
-
-                    </div>
-
-
-
-                    <div *ngFor="let drinks of drinksArray">
+                   
+                    <div *ngFor="let drinks of Edrinks">
                         <mat-card [style.display]="drinks.company.toLowerCase().includes(searchText|lowercase) ||
                             drinks.brand_name.toLowerCase().includes(searchText|lowercase) ||
                             drinks.flavour.toLowerCase().includes(searchText|lowercase) ||
@@ -204,25 +192,25 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
                                 <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
                                     <div fxLayout="row" fxFlex>
-                                        <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="15px">
-                                            <!-- <b>{{drinks.company}}</b> -->
-                                            <div fxLayout="row wrap">
-                                                <b fxLayoutAlign="start center">{{drinks.brand_name}} - </b>
+                                        <div fxLayout="column"  fxLayoutGap="5px">
+                                             <b style="margin-top:-15px" >{{drinks.brand_name}}</b>
+                                            <div fxLayout="row wrap" fxLayoutGap="5px">
+                                                <div style="width:20px"></div>
+                                                <b class="labeltext" fxLayoutAlign="start center"> {{drinks.flavour}} </b>
                                                 <div>
-                                                    <b>{{drinks.flavour}}</b>
-                                                    <b *ngIf="drinks.size !=1">- {{drinks.size}}</b>
+                                                    <b  *ngIf="drinks.size !=1" class="labeltext"> - {{drinks.size}}</b>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div fxLayout="column">
                                         <mat-slide-toggle [checked]="test.value > 0 ? true : false " ngModel
-                                            name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_avaliability">
+                                            name="{{drinks.sku}}">
                                         </mat-slide-toggle>
                                         <mat-form-field style="max-width: 50px;">
                                             <mat-label>Price $</mat-label>
                                             <input ngModel #test
-                                                name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_{{drinks.size}}_price"
+                                                name="{{drinks.sku}}_price"
                                                 type="number" matInput>
                                         </mat-form-field>
 
@@ -370,7 +358,7 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
                 </mat-tab>
 
-                <mat-tab label="Powdered Bev">
+                <mat-tab  label="Powdered Bev">
 
 
 
