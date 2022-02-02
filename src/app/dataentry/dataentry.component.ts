@@ -369,12 +369,12 @@ export class DataentryComponent implements OnInit {
   }
 
   OnSubmit(f: NgForm) {
-    console.log(this.datepipe.transform(this.dateNtimeStart, 'yyyymmdd'));
+    console.log(this.datepipe.transform(this.dateNtimeStart, 'yyyy-MM-dd'));
     this.dateNtimeEnd = +new Date();
     console.log(f.form.value);
     console.log(this.storeForm.value);
     console.log(this.Auth.DecodeID(localStorage.getItem('username')))
-    console.log(this.storeForm.value.sid = this.datepipe.transform(this.dateNtimeStart, 'yyyymmdd')+"8681420")
+    console.log(this.storeForm.value.sid = this.datepipe.transform(this.dateNtimeStart, 'yyyyMMdd,hh:mm'))
     this.openSnackBar(this.dateNtimeStart, this.dateNtimeEnd);
     //console.log(this.dateNtimeStart, this.dateNtimeEnd);
     // console.log(this.lat, this.long, this.accu);
