@@ -131,7 +131,8 @@ initializeDb(email :string, pass:string) {
      });
    });
  }
-destroy(){}
+destroy(){this.db.destroy()}
+
 logoutCartData(){}
 
 hexer(email: string) {

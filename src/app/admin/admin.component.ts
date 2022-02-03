@@ -25,7 +25,11 @@ export class AdminComponent implements OnInit {
     { field: 'Company' },
     { field: 'type' },
     { field: 'size' },
-    { field: 'measurementUnit' }
+    { field: 'measurementUnit' },
+    { field: 'brandName' },
+    { field: 'flavour' },
+    { field: 'category' },
+    { field: 'subCat' },
   ];
   constructor(private route: Router, public dataService: DataService) {}
 
@@ -43,7 +47,7 @@ export class AdminComponent implements OnInit {
   }
 
   findTest(id: string) {
-   // return this.dataTest.sku.find((x) => x.sku == id).name;
+    // return this.dataTest.sku.find((x) => x.sku == id).name;
   }
 
   add_user() {
@@ -65,35 +69,18 @@ export class AdminComponent implements OnInit {
   }
 
   OnSubmit(skuForm: NgForm) {
-    console.log(skuForm.value);
     
-    //for (let field of this.productFields) {
-     // this.arrayTest.find((item) => item.sku == skuForm.value.sku)[field] =
-      //  skuForm.value[field];
-     //   console.log(skuForm.value[field])
-   // } //end of for loop
 
-   this.arrayTest.find((item) => item.sku == skuForm.value.sku).name =
-    skuForm.value.name;
+    for (let data of this.productFields) {
+      this.arrayTest.find((item) => item.sku == skuForm.value.sku)[data.field] =
+        skuForm.value[data.field];
+    } //end of for loop
 
-   this.arrayTest.find((item) => item.sku == skuForm.value.sku).Company =
-       skuForm.value.Company;
-
-      this.arrayTest.find((item) => item.sku == skuForm.value.sku).type =
-       skuForm.value.type;
-
-      this.arrayTest.find((item) => item.sku == skuForm.value.sku).size =
-       skuForm.value.size;
-
-      this.arrayTest.find((item) => item.sku == skuForm.value.sku).measurementUnit =
-       skuForm.value.measurementUnit;
-
-      
     this.dateNtime = +new Date();
     this.arrayTest.find((item) => item.sku == skuForm.value.sku).modifiedBy =
       localStorage.getItem('username');
-      this.arrayTest.find((item) => item.sku == skuForm.value.sku).dateModified = this.dateNtime
-      ;
+    this.arrayTest.find((item) => item.sku == skuForm.value.sku).dateModified =
+      this.dateNtime;
 
     console.log(this.arrayTest);
   }

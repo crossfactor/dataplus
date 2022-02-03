@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isAuth = false;
   isAdmin = false;
 
-  menus = [{name:"Admin",enabled:false,click:"adminRoute"},{name:"History",enabled:false,click:"historyRoute"},{name:"Logout",enabled:true,click:"logout"} ]
+  menus = [{name:"Admin",enabled:false,click:"adminRoute"},{name:"History",enabled:true,click:"historyRoute"},{name:"Logout",enabled:true,click:"logout"} ]
 
   ngOnInit() {this.auth.signedIn.subscribe(arg => {
     

@@ -22,7 +22,7 @@
   </div>
 
   <div  fxFlex="20" fxLayoutAlign="end">
-  <button *ngIf="isAdmin" mat-icon-button [matMenuTriggerFor]="appMenu">
+  <button *ngIf="isAuth" mat-icon-button [matMenuTriggerFor]="appMenu">
 
     <mat-icon>menu</mat-icon>
   </button>
@@ -32,7 +32,7 @@
   <mat-menu #appMenu="matMenu" fxFlex fxLayout fxLayoutAlign="end">
     <span>
       <div style=" width: 100%" *ngFor='let menu of menus ; let i = index'>
-        <button *ngIf="(menu.enabled)" (click)= "this[menu.click]()" fxLayoutAlign="center center" style="color: black" class="details-text" 
+        <button *ngIf="menu.enabled" (click)= "this[menu.click]()" fxLayoutAlign="center center" style="color: black" class="details-text" 
            mat-menu-item>{{menu.name}}</button>
       </div>
       <!-- <div><button fxLayoutAlign = "center center" style="background-color: lightgrey" class="details-text"

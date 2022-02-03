@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   password: string ="";  
   newData: any = {ok:""};
   userForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    userid: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
@@ -45,12 +45,12 @@ export class RegisterComponent implements OnInit {
 
 
     // replace block
-     this.auth.signup(this.encodeID(loginForm.value.email),loginForm.value.password).subscribe(
+     this.auth.signup(this.encodeID(loginForm.value.userid),loginForm.value.password).subscribe(
        data => {this.newData = data; if(this.newData.ok == true ){this.openSnackBar("User Created"); 
-       this.auth.createNewDatabase(this.encodeID(loginForm.value.email),loginForm.value.password,loginForm.value.name,loginForm.value.address,loginForm.value.contactNumber),
+       this.auth.createNewDatabase(loginForm.value.userid,loginForm.value.password,loginForm.value.name,loginForm.value.address,loginForm.value.contactNumber),
        console.log("Success")}; },
        
-       error => {if (error.statusText == "Conflict"){this.openSnackBar("Email already exists"), console.log('something went wrong', error)}})
+       error => {if (error.statusText == "Conflict"){this.openSnackBar("User already exists"), console.log('something went wrong', error)}})
        
   }
 
