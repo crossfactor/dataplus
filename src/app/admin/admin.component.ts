@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
   }
 
   findTest(id: string) {
-    // return this.dataTest.sku.find((x) => x.sku == id).name;
+     return this.dataTest.sku.find((x) => x.sku == id).name;
   }
 
   add_user() {
@@ -77,6 +77,7 @@ export class AdminComponent implements OnInit {
     } //end of for loop
 
     this.dateNtime = +new Date();
+
     this.arrayTest.find((item) => item.sku == skuForm.value.sku).modifiedBy =
       localStorage.getItem('username');
     this.arrayTest.find((item) => item.sku == skuForm.value.sku).dateModified =

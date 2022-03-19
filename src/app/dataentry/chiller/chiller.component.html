@@ -1,0 +1,38 @@
+<mat-card
+            style=" background: rgb(251,251,251);
+background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgba(31,98,193,1) 63%, rgba(0,212,255,1) 100%);">
+            <mat-card-title class="chillerText" (click)="toggleShowDiv('divA')" style="cursor:pointer; font-size:42px; color: rgba(24, 24, 155, 1);
+         ">CHILLERS</mat-card-title>
+
+            <div [@slideInOut]="animationState"
+                style="overflow: hidden; padding-top :0; background-color: rgb(118, 201, 204,.3);">
+
+
+
+                <mat-divider></mat-divider>
+                <div style="height:10px"></div>
+                <div *ngFor="let chiller of ChillerData">
+                    <mat-card class="chillerBox mat-elevation-z4">
+                        <div fxLayout="column" style="width:100%">
+
+
+
+                            <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
+                                <div fxLayout="row" fxFlex fxLayoutGap="10px">
+                                    <b fxLayoutAlign="start center">{{chiller.company}}</b>
+                                </div>
+
+
+
+                                <mat-slide-toggle #f (change)="update($event)" [ngModel] name="{{chiller.company_code}}">
+                                </mat-slide-toggle>
+
+
+
+
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-card>

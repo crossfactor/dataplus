@@ -1,54 +1,60 @@
 <div class='sticky1 mat-elevation-z4'>
-<mat-toolbar  style="background-image: url(assets/seamlessA.jpg); height : 55px">
+  <mat-toolbar style="background-image: url(assets/seamlessA.jpg); height : 55px">
 
 
-<div fxFlex="20">
+    <div fxLayout="row" fxFlex="20">
 
-  <button routerLink="/profile" *ngIf="isAuth" matTooltip="Profile"  mat-icon-button >
-    <mat-icon [ngStyle] = "{'color': isAuth == true ? 'black': '#B33F40'}"  fxFlex fxLayoutAlign="center center">account_circle</mat-icon>
-  </button>
+      <button routerLink="/profile" *ngIf="isAuth" matTooltip="Profile" mat-icon-button>
+        <mat-icon [ngStyle]="{'color': isAuth == true ? 'black': '#B33F40'}" fxFlex fxLayoutAlign="center center">
+          account_circle</mat-icon>
 
-</div>
-
-
-
-  <div style="height:80%; position:relative" fxFlex="60" fxLayout="column" fxLayoutAlign="center">
-
-    <div [routerLink]="['']" fxLayoutAlign="center" style="height:100%;">
-      <img style="cursor:pointer; width:90px" src="../assets/dp2.png" alt="Dataplus">
+      </button>
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <div style="font-size:small;">{{user.name}}</div>
+      </div>
     </div>
 
 
-  </div>
 
-  <div  fxFlex="20" fxLayoutAlign="end">
-  <button *ngIf="isAuth" mat-icon-button [matMenuTriggerFor]="appMenu">
+    <div style="height:80%; position:relative" fxFlex="60" fxLayout="column" fxLayoutAlign="center">
 
-    <mat-icon>menu</mat-icon>
-  </button>
-</div>
-
-
-  <mat-menu #appMenu="matMenu" fxFlex fxLayout fxLayoutAlign="end">
-    <span>
-      <div style=" width: 100%" *ngFor='let menu of menus ; let i = index'>
-        <button *ngIf="menu.enabled" (click)= "this[menu.click]()" fxLayoutAlign="center center" style="color: black" class="details-text" 
-           mat-menu-item>{{menu.name}}</button>
+      <div [routerLink]="['']" fxLayoutAlign="center" style="height:100%;">
+        <img style="cursor:pointer; width:90px" src="../assets/dp2.png" alt="Dataplus">
       </div>
-      <!-- <div><button fxLayoutAlign = "center center" style="background-color: lightgrey" class="details-text"
+
+
+    </div>
+
+    <div fxFlex="20" fxLayoutAlign="end">
+      <button *ngIf="isAuth" mat-icon-button [matMenuTriggerFor]="appMenu">
+
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+
+    <mat-menu #appMenu="matMenu" fxFlex fxLayout fxLayoutAlign="end">
+      <span>
+        <div style=" width: 100%" *ngFor='let menu of menus ; let i = index'>
+          <button *ngIf="menu.enabled" (click)="this[menu.click]()" fxLayoutAlign="center center" style="color: black"
+            class="details-text" mat-menu-item>{{menu.name}}</button>
+        </div>
+        <!-- <div><button fxLayoutAlign = "center center" style="background-color: lightgrey" class="details-text"
         mat-menu-item>Demo</button>
 
       </div> -->
-    </span>
+      </span>
 
-  </mat-menu>
+    </mat-menu>
 
 
-</mat-toolbar>
-<div  style="height:8px; width:100%;background-color: deepskyblue;
+  </mat-toolbar>
+  <div style="height:12px; width:100%;background-color: deepskyblue;
 
 background: rgb(31,98,193);
 background: linear-gradient( rgba(31,98,200,1) 5%, rgba(32,120,222,.9) 80%,  rgba(31,180,220,.9) 90%);
 
-"></div>
+">
+
+  </div>
 </div>

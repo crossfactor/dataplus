@@ -1,22 +1,35 @@
 <div fxLayout="column" fxLayoutGap="20px">
 
+    <mat-card>
+        <mat-form-field apperance="fill">
+            <mat-label>Select Database</mat-label>
+            <mat-select [(value)]="selectedDatabase">
+                <mat-option *ngFor="let database of userDatabase" [value]="database.list">{{database.list}}</mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+        <button type="button" (click)=resets()>rest</button>
+    </mat-card>
+
+
     <!-- Store card info -->
-    <form [formGroup]="storeForm">
+    <form fxLayout="column" fxLayoutGap="20px" *ngIf="selectedDatabase" #f="ngForm" (ngSubmit)="OnSubmit(f)">
         <mat-card>
 
             <mat-card-content>
-                <mat-card-title class="headingText" style="font-size: xx-large;">Store Information</mat-card-title>
+                <mat-card-title class="headingText" style="font-size: xx-large;">Site Information</mat-card-title>
 
                 <div fxLayout="column" fxLayoutGap="8px">
                     <mat-form-field style="max-width:50%">
                         <mat-label>Store Name</mat-label>
-                        <input required formControlName="sname" name="storeName" matInput>
+                        <input required ngModel name="storeName" matInput>
                     </mat-form-field>
 
 
                     <div fxLayout="row wrap" fxWrap fxLayoutGap="10px">
                         <mat-form-field style="max-width:50%">
-                            <mat-select required formControlName="ctype" name="chanelType">
+                            <mat-select required ngModel name="chanelType">
                                 <mat-option *ngFor='let chanelTypeArray of chanelTypeArray;'
                                     [value]=chanelTypeArray.name>
                                     {{chanelTypeArray.name}}</mat-option>
@@ -27,7 +40,7 @@
                         </mat-form-field>
 
                         <mat-form-field style="max-width:50%">
-                            <mat-select required formControlName="sarea" name="area">
+                            <mat-select required ngModel name="area">
                                 <mat-option *ngFor='let areaArray of areaArray;' [value]=areaArray.name>
                                     {{areaArray.name}}
                                 </mat-option>
@@ -41,19 +54,19 @@
 
                     <mat-form-field style="max-width:70%">
                         <mat-label> Address</mat-label>
-                        <input formControlName="saddress" name="storeAddress" matInput>
+                        <input ngModel name="storeAddress" matInput>
                     </mat-form-field>
 
                     <div fxLayout="row wrap" fxLayoutGap="10px">
 
                         <mat-form-field style="max-width:70%">
                             <mat-label> Contact Person</mat-label>
-                            <input formControlName="scontact" name="contactPerson" matInput>
+                            <input ngModel name="contactPerson" matInput>
                         </mat-form-field>
 
                         <mat-form-field style="max-width:70%">
                             <mat-label> Contact Number</mat-label>
-                            <input formControlName="stel" name="contactNumber" matInput>
+                            <input ngModel name="contactNumber" matInput>
                         </mat-form-field>
 
 
@@ -84,53 +97,92 @@
 
 
         </mat-card>
-    </form>
-    <!-- Store card info end -->
 
-    <!-- Chillers section-->
-    <form  #f="ngForm" (ngSubmit)="OnSubmit(f)">
+        <!-- Store card info end -->
 
-    <mat-card 
-    style=" background: rgb(251,251,251);
+
+
+        <!-- Start new Chillers section-->
+
+        <app-chiller [reset]="reset" [ChillerData]="Chillers" (ChillersCollected)="chillerRecieve($event)">
+        </app-chiller>
+
+
+
+
+
+        <!-- End new Chillers section-->
+
+
+
+        <mat-card
+            style=" background: rgb(251,251,251);
 background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgba(31,98,193,1) 63%, rgba(0,212,255,1) 100%);">
-        <mat-card-title class="chillerText" (click)="toggleShowDiv('divA')" style="cursor:pointer; font-size:42px; color: rgba(24, 24, 155, 1);
+            <mat-card-title class="chillerText" (click)="toggleShowDiv('divA')" style="cursor:pointer; font-size:42px; color: rgba(24, 24, 155, 1);
+         ">CHILLERS Dynamic</mat-card-title>
+
+            <div [@slideInOut]="animationState"
+                style="overflow: hidden; padding-top :0; background-color: rgb(118, 201, 204,.3);">
+
+
+
+                <mat-divider></mat-divider>
+                <ng-container *ngFor="let chiller of Chillers">
+                    <app-selection [ChillerData]="chiller" ></app-selection>
+                </ng-container>
+
+            </div>
+
+        </mat-card>
+
+
+
+
+
+        <!-- Chillers section
+
+
+        <mat-card
+            style=" background: rgb(251,251,251);
+background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgba(31,98,193,1) 63%, rgba(0,212,255,1) 100%);">
+            <mat-card-title class="chillerText" (click)="toggleShowDiv('divA')" style="cursor:pointer; font-size:42px; color: rgba(24, 24, 155, 1);
          ">CHILLERS</mat-card-title>
 
-        <div [@slideInOut]="animationState"
-            style="overflow: hidden; padding-top :0; background-color: rgb(118, 201, 204,.3);">
+            <div [@slideInOut]="animationState"
+                style="overflow: hidden; padding-top :0; background-color: rgb(118, 201, 204,.3);">
 
 
 
-            <mat-divider></mat-divider>
-            <div style="height:10px"></div>
-            <div *ngFor="let chiller of Chillers">
-                <mat-card class="chillerBox mat-elevation-z4">
-                    <div fxLayout="column" style="width:100%">
+                <mat-divider></mat-divider>
+                <div style="height:10px"></div>
+                <div *ngFor="let chiller of Chillers">
+                    <mat-card class="chillerBox mat-elevation-z4">
+                        <div fxLayout="column" style="width:100%">
 
 
 
-                        <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
-                            <div fxLayout="row" fxFlex fxLayoutGap="10px">
-                                <b fxLayoutAlign="start center">{{chiller.company}}</b>
+                            <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
+                                <div fxLayout="row" fxFlex fxLayoutGap="10px">
+                                    <b fxLayoutAlign="start center">{{chiller.company}}</b>
+                                </div>
+
+
+
+                                <mat-slide-toggle ngModel name="{{chiller.company_code}}">
+                                </mat-slide-toggle>
+
+
+
+
                             </div>
-
-
-
-                            <mat-slide-toggle ngModel name="{{chiller.company_code}}">
-                            </mat-slide-toggle>
-
-
-
-
                         </div>
-                    </div>
-                </mat-card>
+                    </mat-card>
+                </div>
             </div>
-        </div>
-    </mat-card>
+        </mat-card>
 
-   
-    <div style="height:15px"></div>
+        End Chillers section-->
+
 
         <mat-card>
             <mat-form-field appearance="outline">
@@ -141,48 +193,22 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
+
+
+
+
             <mat-tab-group dynamicHeight>
 
 
-                <!-- End Chillers section-->
-
-
-                <!-- <mat-tab label="Chillers">
-                  
-
-                    <mat-card *ngFor="let drinks of chillersArray; index as i" class="box mat-elevation-z4">
-                        <div fxLayout="column" style="width:100%">
-                            <b>{{drinks.company}}</b>
-
-
-                            <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
-                                <div fxLayout="row" fxFlex fxLayoutGap="10px">
-                                    <b fxLayoutAlign="start center">{{drinks.brand_name}} - {{drinks.flavour}} </b><b
-                                        *ngIf="drinks.size !=1" fxLayoutAlign="start center">- {{drinks.size}}</b>
-                                </div>
 
 
 
-                                <mat-slide-toggle ngModel
-                                    name="{{drinks.company}}_{{drinks.brand_name}}_{{drinks.flavour}}_avaliability">
-                                </mat-slide-toggle>
-
-
-
-
-                            </div>
-                        </div>
-                    </mat-card>
-
-
-
-                </mat-tab> -->
 
 
                 <mat-tab label="E_Drinks">
-                   
+
                     <div *ngFor="let drinks of Edrinks">
-                        <mat-card [style.display]="drinks.company.toLowerCase().includes(searchText|lowercase) ||
+                        <mat-card [style.display]="drinks.Company.toLowerCase().includes(searchText|lowercase) ||
                             drinks.brand_name.toLowerCase().includes(searchText|lowercase) ||
                             drinks.flavour.toLowerCase().includes(searchText|lowercase) ||
                             !searchText? 'block':'none' " class="box mat-elevation-z4">
@@ -192,13 +218,14 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
                                 <div fxLayout="row" fxLayoutGap="15px" style="width:100%;">
                                     <div fxLayout="row" fxFlex>
-                                        <div fxLayout="column"  fxLayoutGap="5px">
-                                             <b style="margin-top:-15px" >{{drinks.brand_name}}</b>
+                                        <div fxLayout="column" fxLayoutGap="5px">
+                                            <b style="margin-top:-15px">{{drinks.brand_name}}</b>
                                             <div fxLayout="row wrap" fxLayoutGap="5px">
                                                 <div style="width:20px"></div>
-                                                <b class="labeltext" fxLayoutAlign="start center"> {{drinks.flavour}} </b>
+                                                <b class="labeltext" fxLayoutAlign="start center"> {{drinks.flavour}}
+                                                </b>
                                                 <div>
-                                                    <b  *ngIf="drinks.size !=1" class="labeltext"> - {{drinks.size}}</b>
+                                                    <b *ngIf="drinks.size !=1" class="labeltext"> - {{drinks.size}}</b>
                                                 </div>
                                             </div>
                                         </div>
@@ -209,9 +236,7 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
                                         </mat-slide-toggle>
                                         <mat-form-field style="max-width: 50px;">
                                             <mat-label>Price $</mat-label>
-                                            <input ngModel #test
-                                                name="{{drinks.sku}}_price"
-                                                type="number" matInput>
+                                            <input ngModel #test name="{{drinks.sku}}_price" type="number" matInput>
                                         </mat-form-field>
 
 
@@ -223,13 +248,6 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
                             </div>
                         </mat-card>
                     </div>
-
-
-
-
-
-
-
 
 
                     <!--<app-selection *ngFor='let drinks of drinksArray; trackBy:track' [drinksArray]="drinks"></app-selection> -->
@@ -358,7 +376,7 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
                 </mat-tab>
 
-                <mat-tab  label="Powdered Bev">
+                <mat-tab label="Powdered Bev">
 
 
 
@@ -450,7 +468,7 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
 
         </div>
-        <div style="height:20px"></div>
+
         <mat-card>
             <mat-card-title class="headingText" style="color:darkturquoise; ">Comments</mat-card-title>
             <mat-form-field style="width:95%">
@@ -462,12 +480,10 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
         </mat-card>
 
-        <div style="height:20px"></div>
-
         <mat-card>
             <div style="width:100%;">
-                <button  (click)="dataService.getSku()" style="max-width: 120px;" 
-                    type="button" mat-raised-button color="warn">getSku</button>
+                <button (click)="merge()" style="max-width: 120px;" type="button" mat-raised-button
+                    color="warn">getSku</button>
 
                 <div fxFlex></div>
                 <button fxLayoutAlign="end end" style="max-width: 120px;" [disabled]="!f.form.valid || !storeForm.valid"

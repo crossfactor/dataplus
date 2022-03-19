@@ -8,8 +8,8 @@ import { Component, OnInit ,Input, Output,EventEmitter } from '@angular/core';
 export class SelectionComponent implements OnInit {
 
   color: string ="white";
-  @Input() drinksArray;
-  @Output() drinksArrayChange = new EventEmitter();
+  @Input() ChillerData;
+  
   constructor() { }
 
   toggleColor(){
@@ -22,6 +22,7 @@ export class SelectionComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.ChillerData)
   }
 
 }

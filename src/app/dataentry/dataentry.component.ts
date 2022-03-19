@@ -6,6 +6,7 @@ import { SlideInOutAnimation } from '../animations';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
 import { DatePipe } from '@angular/common';
+import { Observable, map, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-dataentry',
@@ -16,7 +17,10 @@ import { DatePipe } from '@angular/common';
 export class DataentryComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
 
+ reset : boolean = false
+
   public storeForm: FormGroup;
+  userDatabase: any[] = [{ list: 'things' }, { list: 'more things' }];
 
   color: string;
   storeName: string;
@@ -35,7 +39,6 @@ export class DataentryComponent implements OnInit {
   dateNtime3: number;
   searchText: string;
   animationState = 'out';
-  
 
   chanelTypeArray: any[] = [
     { name: 'Wholeseller' },
@@ -47,7 +50,7 @@ export class DataentryComponent implements OnInit {
     { name: 'Pharmacy' },
     { name: 'Quick Shop' },
     { name: 'Gas Station' },
-    { name: 'Other' },
+    { name: 'Other' }
   ];
 
   areaArray: any[] = [
@@ -77,38 +80,7 @@ export class DataentryComponent implements OnInit {
       brand_name: 'Fridge',
       category: 'Chillers',
       sub_cat: '',
-    },
-    {
-      company: 'Micon',
-      brand_name: 'Fridge',
-      category: 'Chillers',
-      sub_cat: '',
-    },
-    {
-      company: 'Nestle',
-      brand_name: 'Fridge',
-      category: 'Chillers',
-      sub_cat: '',
-    },
-    {
-      company: 'Pepsi',
-      brand_name: 'Fridge',
-      category: 'Chillers',
-      sub_cat: '',
-    },
-    {
-      company: 'Ramsaran',
-      brand_name: 'Fridge',
-      category: 'Chillers',
-      sub_cat: '',
-    },
-    {
-      company: 'Solo Company',
-      brand_name: 'Fridge',
-      category: 'Chillers',
-      sub_cat: '',
-    },
-  ];
+    }];
 
   drinksArray: any[] = [
     {
@@ -119,7 +91,7 @@ export class DataentryComponent implements OnInit {
       category: 'Drink',
       sub_cat: 'Energy Drink',
     }
-    
+
   ];
 
   milkArray: any[] = [
@@ -297,15 +269,43 @@ export class DataentryComponent implements OnInit {
     });
   }
 
-  public Edrinks :[] = [];
-  public Chillers:[] =[];
+  public Edrinks: any[] = [
+    {
+      company: 'Nestle T&T Ltd',
+      brand_name: 'Milo',
+      size: '18x30g',
+      flavour: 'Chocolate',
+      category: 'Drink',
+      sub_cat: 'Powdered Beverage',
+    },
+  ];
+
+  public Edrinks2: Subject<any> = new Subject();
+
+  public Chillers: [] = [];
+  public chillerInput: [] = [];
+  public arrayTest: any;
+  public mergeData: any;
+  public selectedDatabase ;
 
   ngOnInit(): void {
-    this.dataService.getEdrinks();
+    this.dataService.getAllProducts();
 
-    this.dataService.all_products.subscribe(arg => { this.Edrinks = arg.edrinks ; this.Chillers = arg.chillers});
-    
+    //this.dataService.getSku();
+    //this.dataService.skuData.subscribe((arg) => {
+    //  this.mergeData = arg['sku'];
+    //});
 
+    this.dataService.userdata.subscribe(
+      (data) => (this.userDatabase = data.database)
+    );
+
+    this.dataService.all_products.subscribe((arg) => {
+      this.Edrinks = arg.edrinks;
+      this.Chillers = arg.chillers;
+    });
+
+    //end of for loop
   }
 
   getLocation(): void {
@@ -368,32 +368,62 @@ export class DataentryComponent implements OnInit {
     });
   }
 
+  merge() {
+    for (let polo of this.mergeData) {
+      this.Edrinks.find((item) => item.sku == polo.sku).brand_name = polo.sku;
+      //console.log(this.Edrinks);
+    }
+  }
+
   OnSubmit(f: NgForm) {
     console.log(this.datepipe.transform(this.dateNtimeStart, 'yyyy-MM-dd'));
     this.dateNtimeEnd = +new Date();
-    console.log(f.form.value);
+    //console.log(f.form.value);
     console.log(this.storeForm.value);
-    console.log(this.Auth.DecodeID(localStorage.getItem('username')))
-    console.log(this.storeForm.value.sid = this.datepipe.transform(this.dateNtimeStart, 'yyyyMMdd,hh:mm'))
+    //console.log(this.Auth.DecodeID(localStorage.getItem('username')));
+    console.log(
+      (this.storeForm.value.sid = this.datepipe.transform(
+        this.dateNtimeStart,
+        'yyyyMMdd-hhmm'
+      ))
+    );
+
+    this.storeForm.value.sid = this.datepipe.transform(
+      this.dateNtimeStart,
+      'yyyyMMdd-hhmm'
+    )
+
     this.openSnackBar(this.dateNtimeStart, this.dateNtimeEnd);
     //console.log(this.dateNtimeStart, this.dateNtimeEnd);
     // console.log(this.lat, this.long, this.accu);
 
-    this.arrays = f.form.value;
+    this.arrays = { ...this.arrays, ...f.form.value , ...this.chillerInput};
     this.arrays.dateNtimeStart = this.dateNtimeStart;
     this.arrays.dateNtimeEnd = this.dateNtimeEnd;
     this.arrays.latitude = this.lat;
     this.arrays.longitude = this.long;
     this.arrays.locationAccuracy = this.accu;
+    console.log(this.chillerInput)
     //un-comment me, post data to db // this.dataService.postData(this.arrays);
-    console.log(this.arrays)
+    
+
+    console.log(this.arrays);
 
     this.dateNtimeStart = 0;
     this.dateNtimeEnd = 0;
     this.lat = 0;
     this.long = 0;
     this.accu = 0;
-
+        this.reset = true;
     f.resetForm();
+    
   }
+  chillerRecieve(e) {
+    console.log(e);
+    this.chillerInput = e
+  
+  }
+  // this.arrays ={...this.arrays,...e} }
+
+  resets(){this.reset = !this.reset}
 }

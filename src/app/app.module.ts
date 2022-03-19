@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataentryComponent } from './dataentry/dataentry.component';
+
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -29,6 +30,7 @@ import { AdminComponent } from './admin/admin.component';
 import { HeaderComponent } from './Shared/header/header.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HistoryComponent } from './history/history.component';
+import { ChillerComponent } from './dataentry/chiller/chiller.component';
 
 
 
@@ -44,7 +46,8 @@ import { HistoryComponent } from './history/history.component';
     HeaderComponent,
     AdminComponent,
     ProfileComponent,
-    HistoryComponent
+    HistoryComponent,
+    ChillerComponent
   ],
   imports: [
     BrowserModule,

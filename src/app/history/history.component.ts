@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-history',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor() { }
+  search:string;
+ 
+
+  constructor(public dataS :DataService) { }
 
   ngOnInit(): void {
+    
+    
   }
+
+
+  getSearch(searchForm : NgForm){
+   
+   this.dataS.getSearch(searchForm.value.search)
+
+  };
+
 
 }

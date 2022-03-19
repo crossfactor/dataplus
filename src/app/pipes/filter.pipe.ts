@@ -12,10 +12,10 @@ export class FilterPipe implements PipeTransform {
     if (!searchText) return items;
       
     searchText= searchText.toLowerCase();
-    return items.filter(it =>{
-      console.log(it)
+    return items.filter(filtered =>{
+      console.log(filtered)
       console.log (items)
-      return it.company.toLowerCase().includes(searchText);
+      return filtered.company.toLowerCase().includes(searchText);
 
     })
 

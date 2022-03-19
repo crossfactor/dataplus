@@ -1,1 +1,32 @@
-<p>history works!</p>
+<div fxLayoutGap="15px" fxLayout="column" fxLayoutAlign = "start center" class="sticky"  style="width:100%"> 
+
+
+
+  <mat-card>
+
+    <form fxLayout="row" #searchForm="ngForm" (ngSubmit)="getSearch(searchForm)" >
+      <mat-form-field  appearance="standard">
+          <mat-label class="subText">Search</mat-label>
+          <input matInput [(ngModel)]='search' type="text" name="search" >
+          <button *ngIf="search" mat-button type="button" matSuffix mat-icon-button aria-label="Clear" >
+              <mat-icon>close</mat-icon>
+              </button>
+      </mat-form-field>
+    
+      <div  style="width:15px"></div>
+      
+      <button style="height: 50%;margin-top: 20px;"  color="primary" class="subText" type="submit" mat-raised-button>Search <mat-icon>search</mat-icon></button>
+    
+    </form>
+  </mat-card>
+    
+
+  <div *ngFor = "let history of dataS.productData | async ">
+    <mat-card>
+
+      <div>{{history.date}}</div>
+
+
+    </mat-card>
+  </div>
+    </div>
