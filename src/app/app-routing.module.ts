@@ -13,6 +13,7 @@ import { AdminGuardService } from './admin-guard.service';
 
 
 
+
 const routes: Routes = [
   {path: '',canActivate:[AuthGuard],component: DataentryComponent},
   {path: 'admin',canActivate:[AdminGuardService], component: AdminComponent},
@@ -25,6 +26,9 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+   declarations: [
+   
+  ]
 })
 export class AppRoutingModule { }

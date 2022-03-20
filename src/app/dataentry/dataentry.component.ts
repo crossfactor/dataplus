@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, AfterViewInit, } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service';
@@ -8,18 +8,28 @@ import { AuthService } from '../auth.service';
 import { DatePipe } from '@angular/common';
 import { Observable, map, Subject } from 'rxjs';
 
+
 @Component({
   selector: 'app-dataentry',
   templateUrl: './dataentry.component.html',
   styleUrls: ['./dataentry.component.css'],
   animations: [SlideInOutAnimation],
 })
-export class DataentryComponent implements OnInit {
+export class DataentryComponent implements OnInit, AfterViewInit {
   @Output() valueChange = new EventEmitter();
+
+ 
+
+  ngAfterViewInit(){}
+
+
 
  reset : boolean = false
 
   public storeForm: FormGroup;
+
+  public myForm: FormGroup;
+
   userDatabase: any[] = [{ list: 'things' }, { list: 'more things' }];
 
   color: string;
@@ -39,6 +49,10 @@ export class DataentryComponent implements OnInit {
   dateNtime3: number;
   searchText: string;
   animationState = 'out';
+
+
+
+
 
   chanelTypeArray: any[] = [
     { name: 'Wholeseller' },
@@ -252,11 +266,19 @@ export class DataentryComponent implements OnInit {
 
   arrays: any;
 
+  createFormGroup(){
+    this.myForm = new FormGroup({ab001: new FormControl()})
+
+  }
+
+
   constructor(
     public datepipe: DatePipe,
     public Auth: AuthService,
     public dataService: DataService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+   
+    
   ) {
     this.storeForm = new FormGroup({
       sid: new FormControl(),
@@ -267,7 +289,13 @@ export class DataentryComponent implements OnInit {
       scontact: new FormControl(),
       stel: new FormControl(),
     });
+
+    
+
   }
+
+
+
 
   public Edrinks: any[] = [
     {
@@ -287,6 +315,11 @@ export class DataentryComponent implements OnInit {
   public arrayTest: any;
   public mergeData: any;
   public selectedDatabase ;
+
+  
+
+
+
 
   ngOnInit(): void {
     this.dataService.getAllProducts();

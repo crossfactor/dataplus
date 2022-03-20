@@ -20,8 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import {SelectionComponent} from './dataentry/selection/selection.component';
-import {FilterPipe} from './pipes/filter.pipe';
+import { SelectionComponent } from './dataentry/selection/selection.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register/register.component';
@@ -31,7 +31,7 @@ import { HeaderComponent } from './Shared/header/header.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HistoryComponent } from './history/history.component';
 import { ChillerComponent } from './dataentry/chiller/chiller.component';
-
+import { ChillerComponent3 } from './dataentry/chiller3/chiller3.component';
 
 
 @NgModule({
@@ -47,7 +47,9 @@ import { ChillerComponent } from './dataentry/chiller/chiller.component';
     AdminComponent,
     ProfileComponent,
     HistoryComponent,
-    ChillerComponent
+    ChillerComponent,
+    ChillerComponent3
+
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,7 @@ import { ChillerComponent } from './dataentry/chiller/chiller.component';
     HttpClientModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    
     
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
          ServiceWorkerModule.register('ngsw-worker.js', {

@@ -103,17 +103,17 @@
 
 
         <!-- Start new Chillers section-->
-
+        <!--
         <app-chiller [reset]="reset" [ChillerData]="Chillers" (ChillersCollected)="chillerRecieve($event)">
         </app-chiller>
-
+        -->
 
 
 
 
         <!-- End new Chillers section-->
 
-
+        <!--
 
         <mat-card
             style=" background: rgb(251,251,251);
@@ -128,13 +128,52 @@ background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgb
 
                 <mat-divider></mat-divider>
                 <ng-container *ngFor="let chiller of Chillers">
-                    <app-selection [ChillerData]="chiller" ></app-selection>
+                    <app-selection  [ChillerData]="chiller" ></app-selection>
                 </ng-container>
 
             </div>
 
         </mat-card>
+    -->
 
+
+
+
+
+            <!-- Test value accesor chillers -->
+
+                 <mat-card
+            style=" background: rgb(251,251,251);
+background: linear-gradient( rgba(251,251,251,1) 0%,rgba(128,124,209,1) 55%, rgba(31,98,193,1) 63%, rgba(0,212,255,1) 100%);">
+            <mat-card-title class="chillerText" (click)="toggleShowDiv('divA')" style="cursor:pointer; font-size:42px; color: rgba(24, 24, 155, 1);
+         ">CHILLERS Dynamic</mat-card-title>
+
+            <div [@slideInOut]="animationState"
+                style="overflow: hidden; padding-top :0; background-color: rgb(118, 201, 204,.3);">
+
+
+
+                <mat-divider></mat-divider>
+               
+
+                <ng-container *ngFor="let chiller of Chillers">
+                    <app-selection [ngModel]  name ="{{chiller.company_code}}" [ChillerData]="chiller" ></app-selection>
+                </ng-container>
+
+           
+           
+
+            </div>
+
+        </mat-card>
+
+
+
+    
+
+
+
+            <!-- Test value accesor chillers --> 
 
 
 
