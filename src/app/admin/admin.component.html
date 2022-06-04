@@ -47,7 +47,7 @@
             <div>Products</div>
 
             <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center"
-                *ngFor="let product of dataTest.sku">
+                *ngFor="let product of arrayTest">
                 <mat-card style="width: 90%;">
                     <form #skuForm=ngForm (ngSubmit)="OnSubmit(skuForm)">
                         <div *ngFor="let item of productFields" fxLayout="column">
@@ -55,40 +55,15 @@
                             <div fxLayoutGap="5px" fxLayoutAlign="row">
                                 <div>{{item.field}} :</div>
                                 <input style="width: 50%;"  [(ngModel)]="product[item.field]" name="{{item.field}}" matInput>
+                                
                             </div>
-                            <!--
-                        <div fxLayoutGap="5px" fxLayoutAlign="row">
-                            <div>Name :</div>
-                            <input style="width: 50%;" ngModel name="{{product.name}}" matInput [disabled]="editable" [value]="product.name">
-                        </div>
-                        
-                        <div fxLayoutGap="5px" fxLayoutAlign="row">
-                            <div>Company :</div>
-                            <input style="width: 50%;" ngModel name="{{product.Company}}" matInput [disabled]="editable" [value]="product.Company">
-                        </div>
-                        
-                        <div fxLayoutGap="5px" fxLayoutAlign="row">
-                            <div>Type :</div>
-                            <input style="width: 50%;" ngModel name="{{product.type}}" matInput [disabled]="editable" [value]="product.type">
-                        </div>
-                        
-                        <div fxLayoutGap="5px" fxLayoutAlign="row">
-                            <div>Size :</div>
-                            <input style="width: 50%;" ngModel name="{{product.size}}" matInput [disabled]="editable" [value]="product.size">
-                        </div>
-
-                        <div fxLayoutGap="5px" fxLayoutAlign="row">
-                            <div>Measurement :</div>
-                            <input style="width: 50%;" ngModel name="{{product.measurement}}" matInput [disabled]="editable" [value]="product.measurement">
-                        </div>
-
-                        -->
+                           
 
                         </div>
 
-                        <mat-slide-toggle [ngModel]="editable" [ngModelOptions]="{standalone: true}">Edit toggle
+                        <mat-slide-toggle #toggle [ngModel]="editable" [ngModelOptions]="{standalone: true}">Edit toggle
                         </mat-slide-toggle>
-                        <button type="submit" mat-raised-button color="accent"> Update</button>
+                        <button [disabled]="!toggle.checked" type="submit" mat-raised-button color="accent"> Update</button>
                     </form>
                 </mat-card>
             </div>

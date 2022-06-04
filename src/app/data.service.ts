@@ -170,6 +170,13 @@ export class DataService {
     //console.log(this.productData)
   }
 
+  updateProducts(data) {
+
+    this.http
+      .post(environment.update_products_url, data, this.HttpOptions)
+      .subscribe((datas) => {console.log(datas)}) } 
+
+
   getAllProducts() {
     this.http
       .get(environment.products_url, this.HttpOptions)

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, AfterViewInit, } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, AfterViewInit, OnDestroy, } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service';
@@ -6,7 +6,7 @@ import { SlideInOutAnimation } from '../animations';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
 import { DatePipe } from '@angular/common';
-import { Observable, map, Subject } from 'rxjs';
+import { Observable, map, Subject, Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { Observable, map, Subject } from 'rxjs';
   styleUrls: ['./dataentry.component.css'],
   animations: [SlideInOutAnimation],
 })
-export class DataentryComponent implements OnInit, AfterViewInit {
+export class DataentryComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() valueChange = new EventEmitter();
 
  
@@ -31,6 +31,11 @@ export class DataentryComponent implements OnInit, AfterViewInit {
   public myForm: FormGroup;
 
   userDatabase: any[] = [{ list: 'things' }, { list: 'more things' }];
+
+
+  obs : Subscription
+  obs2 : Subscription
+
 
   color: string;
   storeName: string;
@@ -266,12 +271,6 @@ export class DataentryComponent implements OnInit, AfterViewInit {
 
   arrays: any;
 
-  createFormGroup(){
-    this.myForm = new FormGroup({ab001: new FormControl()})
-
-  }
-
-
   constructor(
     public datepipe: DatePipe,
     public Auth: AuthService,
@@ -322,7 +321,7 @@ export class DataentryComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-    this.dataService.getAllProducts();
+     this.dataService.getAllProducts();
 
     //this.dataService.getSku();
     //this.dataService.skuData.subscribe((arg) => {
@@ -333,9 +332,11 @@ export class DataentryComponent implements OnInit, AfterViewInit {
       (data) => (this.userDatabase = data.database)
     );
 
-    this.dataService.all_products.subscribe((arg) => {
+    this.obs = this.dataService.all_products.subscribe((arg) => {
       this.Edrinks = arg.edrinks;
+      this.maltArray = arg.maltdrinks;
       this.Chillers = arg.chillers;
+      console.log(arg)
     });
 
     //end of for loop
@@ -459,4 +460,10 @@ export class DataentryComponent implements OnInit, AfterViewInit {
   // this.arrays ={...this.arrays,...e} }
 
   resets(){this.reset = !this.reset}
+
+ngOnDestroy(){
+this.obs.unsubscribe()
+
+}
+
 }
