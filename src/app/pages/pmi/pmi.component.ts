@@ -62,10 +62,10 @@ cignames:any[] = [
   {brandName:"Broadway",size:"regular",flavour:"Broadway",picture:"../assets/cigarette_placeholder.png"},
   {brandName:"Du Maurier",size:"20s",flavour:"Maurier",picture:"../assets/cigarette_placeholder.png"},
   {brandName:"Du Maurier",size:"10s",flavour:"Maurier",picture:"../assets/cigarette_placeholder.png"},
-  {brandName:"Dunhill",size:"20s",flavour:"Red",picture:"../assets/cigarette_placeholder.png"},
-  {brandName:"Dunhill",size:"10s",flavour:"Red",picture:"../assets/cigarette_placeholder.png"},
-  {brandName:"Dunhill",size:"20s",flavour:"Blue",picture:"../assets/cigarette_placeholder.png"},
-  {brandName:"Dunhill",size:"regular",flavour:"Switch",picture:"../assets/cigarette_placeholder.png"},
+  {brandName:"Dunhill",size:"20s",flavour:"Red",picture:"../assets/dunhill_red2.png"},
+  {brandName:"Dunhill",size:"10s",flavour:"Red",picture:"../assets/dunhill_red.png"},
+  {brandName:"Dunhill",size:"20s",flavour:"Blue",picture:"../assets/dunhill_blue.png"},
+  {brandName:"Dunhill",size:"regular",flavour:"Switch",picture:"../assets/dunhill_switch.png"},
   {brandName:"Dunhill",size:"regular",flavour:"Double Pink",picture:"../assets/cigarette_placeholder.png"},
   {brandName:"Dunhill",size:"regular",flavour:"Double Orange",picture:"../assets/cigarette_placeholder.png"},
   {brandName:"Dunhill",size:"regular",flavour:"Double Release",picture:"../assets/cigarette_placeholder.png"},
@@ -85,7 +85,7 @@ cartonnames:any[] = [
   {brandName:"Marlboro",size:"Carton",flavour:"Red",picture:"../assets/marlboro_carton_red.png"},
   {brandName:"Marlboro",size:"Carton",flavour:"Gold",picture:"../assets/marlboro_carton_gold.png"},
   {brandName:"Marlboro",size:"Carton",flavour:"Ice",picture:"../assets/marlboro_carton_ice.png"},
-  {brandName:"Marlboro",size:"Carton",flavour:"Double Fusion",picture:"../assets/marlboro-carton_fusion.png"},
+  {brandName:"Marlboro",size:"Carton",flavour:"Double Fusion",picture:"../assets/marlboro_carton_fusion.png"},
   {brandName:"Marlboro",size:"Carton",flavour:"Vista",picture:"../assets/marlboro_carton_vista.png"},
   {brandName:"L&M",size:"20s",flavour:"Red",picture:"../assets/malboro_red.png"},
   {brandName:"L&M",size:"10s",flavour:"Red",picture:"../assets/malboro_red.png"},
@@ -115,8 +115,20 @@ cartonnames:any[] = [
 
 
 
+dispencersArray:any[] = [
+  {dispencerName:"Marlboro"},
+  {dispencerName:"L&M"},
+  {dispencerName:"Rothmans"},
+  {dispencerName:"Broadway"},
+  {dispencerName:"Du_Maurier"},
+  {dispencerName:"Dunhill"},
+  {dispencerName:"Revel"},
+  {dispencerName:"Zon_King"},
+  {dispencerName:"Trini_Blendz"},
+  {dispencerName:"Tradition"},
 
 
+]
 
 
 
