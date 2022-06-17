@@ -10,13 +10,14 @@ import {RegisterComponent} from './login/register/register.component';
 import { AuthGuard } from './auth-guard.service';
 import { AdminGuardService } from './admin-guard.service';
 
-
+import {PmiComponent} from './pages/pmi/pmi.component';
 
 
 
 const routes: Routes = [
-  {path: '',canActivate:[AuthGuard],component: DataentryComponent},
+  {path: '',canActivate:[AuthGuard],component: PmiComponent},
   {path: 'admin',canActivate:[AdminGuardService], component: AdminComponent},
+  {path: 'pmi',canActivate:[AuthGuard],component: PmiComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'history', component: HistoryComponent},
   {path: 'login', component: LoginComponent,

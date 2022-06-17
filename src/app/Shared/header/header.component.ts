@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from '../../auth.service';
 
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/data.service';
+import { DataService } from '../../data.service';
 
 @Component({
   selector: 'app-header',
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.dataS.userdata.subscribe(arg =>{this.user = arg})
+    this.dataS.userdata.subscribe(arg =>{this.user = arg; console.log(arg)})
 
   }
 

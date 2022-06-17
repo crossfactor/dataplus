@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../src/environments/environment';
 
 @Injectable({
   // we declare that this service should be created
@@ -51,12 +51,22 @@ export class DataService {
     this.db.post(data);
   }
 
+
+
+  createdb(email:string){this.db = new PouchDB(email);}
+
   initializeDb(email: string, pass: string) {
+    
     PouchDB.plugin(PouchDBFind);
+    
     var remoteUrl =
       'https://' + email + ':' + pass + '@' + environment.database_url + email;
 
+      
+
+
     if (!this.isInstantiated) {
+      console.log("%c"+this.isInstantiated,"color:green")
       this.db = new PouchDB(email);
       this.isInstantiated = true;
     }
@@ -76,6 +86,7 @@ export class DataService {
       })
       .on('change', function (change: any) {
         // yo, something changed!
+        this.emitPosts();
       })
       .on('paused', function (info: any) {
         // replication was paused, usually because of a lost connection
@@ -99,10 +110,10 @@ export class DataService {
         if (change.deleted) {
           // document was deleted
           console.log('item deleted');
-          this.emitPosts();
+          //this.emitPosts();
         } else {
           console.log('item changed');
-          this.emitPosts();
+          //this.emitPosts();
 
           // document was added/modified
         }
@@ -120,6 +131,9 @@ export class DataService {
       });
     });
   }
+
+
+
   destroy() {
     this.db.destroy();
   }
@@ -136,7 +150,7 @@ export class DataService {
 
   getUserDoc() {
     this.db.get('userdata').then((doc: any) => {
-      this.userdata.next(doc);
+      this.userdata.next(doc); 
     });
   }
 
@@ -148,7 +162,7 @@ export class DataService {
 
   getSku() {
     this.http
-      .get('https://database.crossfactor.net:6984', this.HttpOptions3)
+      .get(environment.baseDatabaseURL, this.HttpOptions3)
       .subscribe((data) => {
         //online check
         if (data['couchdb'] == 'Welcome') {

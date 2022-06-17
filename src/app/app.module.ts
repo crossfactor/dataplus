@@ -33,6 +33,10 @@ import { HistoryComponent } from './history/history.component';
 import { ChillerComponent } from './dataentry/chiller/chiller.component';
 import { ChillerComponent3 } from './dataentry/chiller3/chiller3.component';
 
+import { PmiComponent } from './pages/pmi/pmi.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -48,7 +52,8 @@ import { ChillerComponent3 } from './dataentry/chiller3/chiller3.component';
     ProfileComponent,
     HistoryComponent,
     ChillerComponent,
-    ChillerComponent3
+    ChillerComponent3,
+    PmiComponent
 
   ],
   imports: [

@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutGap="20px">
 
-    <mat-card>
+  <!--  <mat-card>
         <mat-form-field apperance="fill">
             <mat-label>Select Database</mat-label>
             <mat-select [(value)]="selectedDatabase">
@@ -11,10 +11,10 @@
         </mat-form-field>
 
     </mat-card>
-
+-->
 
     <!-- Store card info -->
-    <form fxLayout="column" fxLayoutGap="20px" *ngIf="selectedDatabase" #f="ngForm" (ngSubmit)="OnSubmit(f)">
+    <form fxLayout="column" fxLayoutGap="20px"  #f="ngForm" (ngSubmit)="OnSubmit(f)">
         <mat-card>
 
             <mat-card-content>

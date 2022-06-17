@@ -44,6 +44,11 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit(loginForm: NgForm) {
+
+    
+      this.data.createdb(this.auth.encodeID(loginForm.value.userName))
+    
+
     this.auth.login(this.auth.encodeID(loginForm.value.userName),loginForm.value.password)
     //this.username = loginForm.controls['username'].value
     

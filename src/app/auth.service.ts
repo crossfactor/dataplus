@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../src/environments/environment';
 import { Router } from '@angular/router';
 import { DataService } from './data.service';
 
@@ -124,6 +124,8 @@ export class AuthService {
   }
 
   // end - sign UP
+
+
   login(email: string, pass: string) {
     this.http
       .post(
@@ -134,6 +136,7 @@ export class AuthService {
       .subscribe(
         (data) => {
           this.loginData = data;
+          console.log(data);
           this.loginData.roles.forEach((element) => {
             if ((element = 'admin')) {
               this.roles.next({ admin: true });
@@ -144,6 +147,7 @@ export class AuthService {
             this.loginData.ok == true ||
             localStorage.getItem('signedIN') == 'yes'
           ) {
+            
             this.data.initializeDb(email, pass), this.setLocalIN(email, pass);
             this.data.testSign.next(true);
 
