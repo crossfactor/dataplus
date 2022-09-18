@@ -115,7 +115,7 @@
 
 
 
-    <mat-card style="background-color: beige;">
+    <mat-card fxHide="{f.form.value.sell_cigarettes == 'Yes'}" style="background-color: beige;">
 
         <div>
             <mat-form-field appearance="fill">
@@ -156,19 +156,19 @@
                                     <div fxLayout="column" fxLayoutGap="5px" style="width:100%">
                                         <div fxlayout="row" fxLayoutGap="10px">
 
-                                            <b style="margin-top:-15px">{{cignames.brandName}}</b>
+                                            <b>{{cignames.brandName}}</b>
 
-                                            <button (click)="test.value=28"
-                                                style="border:none;color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
+                                            <button class="raised" (click)="test.value=28"
+                                                style="color: whitesmoke ; background-color:#37474f; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
                                                 type="button"> $28</button>
-                                            <button (click)="test.value=32"
-                                                style="border:none;color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
+                                            <button class="raised" (click)="test.value=32"
+                                                style="color: whitesmoke ; background-color:#37474f; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
                                                 type="button"> $32</button>
-                                            <button (click)="test.value=42"
-                                                style="border:none;color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
+                                            <button class="raised" (click)="test.value=42"
+                                                style="color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
                                                 type="button"> $42</button>
-                                            <button (click)="test.value=52"
-                                                style="border:none;color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
+                                            <button class="raised" (click)="test.value=52"
+                                                style="color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
                                                 type="button"> $52</button>
 
                                         </div>
@@ -194,11 +194,13 @@
                                 </div>
                                 <div fxLayout="column">
                                     <mat-slide-toggle [checked]="test.value > 0 ? true : false " ngModel
-                                        name="{{cignames.brandName}}">
+                                        name="{{cignames.brandName}}_{{cignames.flavour}}_{{cignames.size}}">
                                     </mat-slide-toggle>
                                     <mat-form-field style="max-width: 50px;">
                                         <mat-label>Price $</mat-label>
-                                        <input ngModel #test name="{{cignames.brandName}}_price" type="number" matInput>
+                                        <input ngModel #test
+                                            name="{{cignames.brandName}}_{{cignames.flavour}}_{{cignames.size}}_price"
+                                            type="number" matInput>
                                     </mat-form-field>
 
 
@@ -217,7 +219,7 @@
             <mat-tab label="Cartons">
 
 
-                <div *ngFor="let cignames of cartonnames" [style.display]="cignames.brandName.toLowerCase().includes(searchText|lowercase) ||
+                <div *ngFor="let cignames of cartonNames" [style.display]="cignames.brandName.toLowerCase().includes(searchText|lowercase) ||
                 cignames.flavour.toLowerCase().includes(searchText|lowercase) ||
                 cignames.size.toLowerCase().includes(searchText|lowercase) ||
                 !searchText? 'block':'none' ">
@@ -233,21 +235,21 @@
                                         <div fxlayout="row" fxLayoutGap="10px">
 
 
-                                            <b>{{cignames.brandName}}</b>
+                                            <b style="margin-top:-15px">{{cignames.brandName}}</b>
 
 
 
-                                            <button (click)="test.value=28"
-                                                style="border:none;color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
+                                            <button class="raised" (click)="test.value=28"
+                                                style="color: #006db3 ; background-color:#ffbb93; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
                                                 type="button"> $28</button>
-                                            <button (click)="test.value=32"
-                                                style="border:none;color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
+                                            <button class="raised" (click)="test.value=32"
+                                                style="color: #00701a ; background-color:#ffff6b; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
                                                 type="button"> $32</button>
-                                            <button (click)="test.value=42"
-                                                style="border:none;color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
+                                            <button class="raised" (click)="test.value=42"
+                                                style="color: #5d4037 ; background-color:#bef67a; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
                                                 type="button"> $42</button>
-                                            <button (click)="test.value=52"
-                                                style="border:none;color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
+                                            <button class="raised" (click)="test.value=52"
+                                                style="color: whitesmoke ; background-color:#008CBA; border-radius: 12px;font-weight:bold;font-size: 12px;padding:4px 10px"
                                                 type="button"> $52</button>
 
                                         </div>
@@ -255,7 +257,9 @@
 
                                         <div fxLayout="row" fxLayoutGap="5px" style="width:100%">
                                             <div fxLayoutAlign="center center" style="width:85px;height:55px">
-                                                <img style="width:100%;max-height:50px ;" src={{cignames.picture}}>
+                                                <img class=testing style="width:100%;max-height:50px ;"
+                                                    src={{cignames.picture}}
+                                                    onerror="this.onerror=null;this.src='/assets/cigarette_placeholder.png';">
                                             </div>
 
                                             <div style="width:15px"></div>
@@ -276,11 +280,13 @@
                                 </div>
                                 <div fxLayout="column">
                                     <mat-slide-toggle [checked]="test.value > 0 ? true : false " ngModel
-                                        name="{{cignames.brandName}}">
+                                        name="{{cignames.brandName}}_{{cignames.flavour}}_{{cignames.size}}">
                                     </mat-slide-toggle>
                                     <mat-form-field style="max-width: 50px;">
                                         <mat-label>Price $</mat-label>
-                                        <input ngModel #test name="{{cignames.brandName}}_price" type="number" matInput>
+                                        <input ngModel #test
+                                            name="{{cignames.brandName}}_{{cignames.flavour}}_{{cignames.size}}_price"
+                                            type="number" matInput>
                                     </mat-form-field>
 
 
@@ -320,19 +326,27 @@
             </mat-slide-toggle>
         </div>
 
-        <div fxHide fxLayout="column" fxLayoutGap="10px" [style.display]="tag.checked? 'block':'none'">
+
+
+        <div fxLayout="column" fxLayoutGap="10px" [ngStyle]="{display:tag.checked? 'block':'none'}">
+            <div style="display:'none';border-style:groove;border-color: black;width:100%;height:25px">
+                <div style="height:100%;width:10%; background-color:greenyellow"></div>
+            </div>
 
             <div *ngFor="let dispencer of dispencersArray">
+
+
+
                 <div fxLayout="row" fxLayoutGap="5px">
                     <div fxLayoutAlign="start center" style=" width: 100px;">
                         <div fxLayout="row" [ngStyle]="{'width':slideval.value+'%'}" style="background-color: #98e0f8;">
                             <b>{{dispencer.dispencerName}}</b>
                         </div>
                     </div>
-                    <mat-slider #slideval style="width:50%" [max]="100" [min]="0" [thumbLabel]="true" [tickInterval]="1"
-                        ngModel name="testyt">
+                    <mat-slider #slideval style="width:50%" [max]="100" [min]="0" [thumbLabel]="true"
+                        [tickInterval]="10" [step]="10" ngModel name="{{dispencer.dispencerName}}_share">
                     </mat-slider>
-
+                    <div>{{f.form.value.Marlboro_share + f.form.value.Marlboro_share}}</div>
                 </div>
             </div>
 
@@ -347,6 +361,18 @@
 
 
 
-</form>
 
-<div style="height:30px"></div>
+
+
+    <mat-card [ngStyle]="{'background-color': f.form.valid ? 'white':'grey'}">
+        <div fxLayout="row" fxLayoutAlign="end end">
+            <button style=" border: 2px dashed red;" mat-raised-button color="primary" [disabled]="!f.form.valid"
+                type="submit"> Submit </button>
+
+        </div>
+    </mat-card>
+
+
+    <div style="height:35px"></div>
+
+</form>

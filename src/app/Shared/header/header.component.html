@@ -10,8 +10,8 @@
 
       </button>
       <div fxLayout="column" fxLayoutAlign="center center">
-        <div style="font-size:small;">{{user.name}}</div>
-      </div>
+        <div style="font-size:small;">{{user}}</div>
+        </div>
     </div>
 
 
@@ -24,7 +24,7 @@
 
 
     </div>
-
+    
     <div fxFlex="20" fxLayoutAlign="end">
       <button *ngIf="isAuth" mat-icon-button [matMenuTriggerFor]="appMenu">
 

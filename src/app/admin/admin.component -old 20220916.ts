@@ -82,8 +82,8 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   changeListener(files: FileList) {
     //this.dataService.getAllProducts();
-    // console.log(files.item.length);
-    // console.log(files);
+   // console.log(files.item.length);
+   // console.log(files);
 
     if (files.item.length > 0) {
       var numberOfFiles = files.length;
@@ -92,12 +92,12 @@ export class AdminComponent implements OnInit, OnDestroy {
         //console.log('woof');
 
         let file: File = files.item(iterator);
-
+        
         iterator++;
         let reader: FileReader = new FileReader();
         reader.readAsText(file);
 
-        var result = [];
+        const result = [];
         reader.onload = (e) => {
           let csv: string = reader.result as string;
 
@@ -107,92 +107,45 @@ export class AdminComponent implements OnInit, OnDestroy {
           //split the first line into a headers array
           this.headers = this.fileArray[0].split(',');
           console.log(this.headers);
-          var test = [];
-
+          console.log("woof");
+          
+          
           //loop over every line except header
           for (var i = 1; i < this.fileArray.length; i++) {
             //set the current line, initially the line after the header
             const currentline = this.fileArray[i].split(',');
             //console.log(this.fileArray.length);
             // console.log(currentline);
-            var obj = {};
-            var obj2 = {};
+            const obj = {};
 
             //skip blank lines
             if (!this.fileArray[i].match(/^[,\s]*$/)) {
               //regex to find spaces and commas on line only
               //merge the headers with the line data
-              var head = 'data11';
               for (let j = 0; j < this.headers.length; j++) {
-                //split header into parts
-
-                const headerSplit = this.headers[j].split('__');
-
-                
-
-                // split obj on data headers
-                
-                if (head == headerSplit[0]){obj[headerSplit[1]] = currentline[j];}
-
-                console.log(j)
-                //if (j == 0) {
-                //  head = headerSplit[0];
-               // }
-
-                console.log (obj)
-                
-                if (!test[headerSplit[0]]) {
-                  test[headerSplit[0]] = [];
-                }
-                
-
-                console.log(head, headerSplit[0]);
-                if (head != headerSplit[0]) {
-                  console.log('%cnew array', 'color: blue');
-                  //console.log(obj);
-                 if (j!= 0 ){test[head].push(obj);} 
-                  head = headerSplit[0];
-                  obj = {}
-                  obj[headerSplit[1]] = currentline[j];
-                  console.log(obj);
-                }
-                
-              
-
-                if (j == this.headers.length-1) {
-                  console.log("last run")
-                  test[headerSplit[0]].push(obj);
-                }
+                obj[this.headers[j]] = currentline[j];
               }
-            }
+              
+              result.push(obj);
+            } //end of if
 
-            //console.log(test);
-            // result.push(obj);
-            // console.log(result)
-          } //end of if
+            //console.log(obj);
+          }
+          
+          this.arrayData['dataCat' + iterator] = result;
+         // console.log(this.arrayData);
 
-          //console.log(obj);
-          //testing["data1"] = result
-          //console.log(result);
-          console.log(test);
-          result = test;
+          console.log('%cLog Message', 'color: orange');
         };
-
-        console.log(result);
-        // this.arrayData['dataCat' + iterator] = result;
-        // console.log(this.arrayData);
-
-        console.log('%cLog Message', 'color: orange');
       }
-    }
-    //end of for file loop
-
+    } //end of for file loop
     console.log('%cfulldata', 'color: green');
     console.log(this.arrayData);
 
     this.getData();
+    
   }
-  teestHeaders: any = [];
+teestHeaders:any =[]
 
   getData() {
     this.dataService.db.get('pml-data').then((doc: any) => {
@@ -203,7 +156,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.arrayData._rev = doc._rev;
 
       //this.arrayTest = JSON.stringify(this.arrayTest)
-      // this.teestHeaders = this.arrayData.data1[0].keys()
+     // this.teestHeaders = this.arrayData.data1[0].keys()
       //console.log(this.arrayData.data1[0].keys());
       this.dataService.db.put(this.arrayData);
     });

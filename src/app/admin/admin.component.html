@@ -14,7 +14,7 @@
     <mat-card>
 
 
-        <input [(ngModel)]="fileInput" type="file" (change)="changeListener($event.target.files)" accept=".csv">
+        <input [(ngModel)]="fileInput" type="file" multiple (change)="changeListener($event.target.files)" accept=".csv">
 
     </mat-card>
 
@@ -47,9 +47,13 @@
             <div>Products</div>
 
             <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center"
-                *ngFor="let product of arrayTest">
+                *ngFor="let product of arrayData.data1">
                 <mat-card style="width: 90%;">
+
                     <form #skuForm=ngForm (ngSubmit)="OnSubmit(skuForm)">
+                        
+                        
+
                         <div *ngFor="let item of productFields" fxLayout="column">
 
                             <div fxLayoutGap="5px" fxLayoutAlign="row">
@@ -58,7 +62,6 @@
                                 
                             </div>
                            
-
                         </div>
 
                         <mat-slide-toggle #toggle [ngModel]="editable" [ngModelOptions]="{standalone: true}">Edit toggle

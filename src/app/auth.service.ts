@@ -148,7 +148,8 @@ export class AuthService {
             localStorage.getItem('signedIN') == 'yes'
           ) {
             
-            this.data.initializeDb(email, pass), this.setLocalIN(email, pass);
+            this.data.initializeDb(email, pass),
+            this.setLocalIN(email, pass);
             this.data.testSign.next(true);
 
             if (
@@ -199,6 +200,7 @@ export class AuthService {
     localStorage.setItem('signedIn', 'no');
     localStorage.setItem('username', null);
     localStorage.setItem('password', null);
+    localStorage.setItem('name', 'Guest');
     this.signedIn.next(false);
     this.roles.next({ admin: false });
   }

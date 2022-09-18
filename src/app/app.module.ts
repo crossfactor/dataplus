@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,9 +35,6 @@ import { ChillerComponent3 } from './dataentry/chiller3/chiller3.component';
 
 import { PmiComponent } from './pages/pmi/pmi.component';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,8 +50,7 @@ import { PmiComponent } from './pages/pmi/pmi.component';
     HistoryComponent,
     ChillerComponent,
     ChillerComponent3,
-    PmiComponent
-
+    PmiComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,19 +61,38 @@ import { PmiComponent } from './pages/pmi/pmi.component';
     HttpClientModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    
-    
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-         ServiceWorkerModule.register('ngsw-worker.js', {
-           enabled: environment.production,
-           // Register the ServiceWorker as soon as the app is stable
-           // or after 30 seconds (whichever comes first).
-           registrationStrategy: 'registerWhenStable:30000'
-         }),
 
-
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
-  providers: [DataService,AuthService,AuthGuard,AdminGuardService,DatePipe],
-  bootstrap: [AppComponent]
+  providers: [
+    DataService,
+    AuthService,
+    AuthGuard,
+    AdminGuardService,
+    DatePipe,
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: (auth: AuthService) => {
+        return()=>{if (localStorage.getItem('signedIn') == 'yes') {
+          auth.signedIn.next(true);
+          auth.login(
+          localStorage.getItem('username'),
+          localStorage.getItem('password')
+        );
+      }};
+      },
+      deps:[AuthService]
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

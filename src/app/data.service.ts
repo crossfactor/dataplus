@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter, NgZone } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import PouchDB from 'pouchdb';
-import PouchDBFind from 'pouchdb-find';
+//import PouchDBFind from 'pouchdb-find';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../src/environments/environment';
 
@@ -43,9 +43,15 @@ export class DataService {
 
   public db: any;
   private isInstantiated: boolean = false;
-  private listener: EventEmitter<any> = new EventEmitter();
+  //private listener: EventEmitter<any> = new EventEmitter();
 
-  constructor(private http: HttpClient, public zone: NgZone) {}
+  constructor(private http: HttpClient, public zone: NgZone) {
+    
+    if (localStorage.getItem('signedIn') == 'yes'){
+    this.initializeDb(localStorage.getItem('username'),localStorage.getItem('password'))
+    }
+  
+  }
 
   postData(data) {
     this.db.post(data);
@@ -57,16 +63,14 @@ export class DataService {
 
   initializeDb(email: string, pass: string) {
     
-    PouchDB.plugin(PouchDBFind);
+    //PouchDB.plugin(PouchDBFind);
     
     var remoteUrl =
       'https://' + email + ':' + pass + '@' + environment.database_url + email;
 
       
-
-
     if (!this.isInstantiated) {
-      console.log("%c"+this.isInstantiated,"color:green")
+      //console.log("%c"+email,"color:green")
       this.db = new PouchDB(email);
       this.isInstantiated = true;
     }
@@ -82,17 +86,19 @@ export class DataService {
         live: true,
         retry: true,
         continuous: true,
-        include_docs: false,
+        include_docs: true,
       })
       .on('change', function (change: any) {
         // yo, something changed!
-        this.emitPosts();
+       // this.emitPosts();
+       // console.log("%c"+"db is updating","color:green")
       })
       .on('paused', function (info: any) {
         // replication was paused, usually because of a lost connection
       })
       .on('active', function (info: any) {
         // replication was resumed
+        //console.log("%c"+"db is updating","color:red")
       })
       .on('error', function (err: any) {
         // totally unhandled error (shouldn't happen)
@@ -110,10 +116,11 @@ export class DataService {
         if (change.deleted) {
           // document was deleted
           console.log('item deleted');
-          //this.emitPosts();
+          this.emitPosts();
         } else {
           console.log('item changed');
-          //this.emitPosts();
+          this.emitPosts();
+          this.getUserDoc();
 
           // document was added/modified
         }
@@ -151,6 +158,7 @@ export class DataService {
   getUserDoc() {
     this.db.get('userdata').then((doc: any) => {
       this.userdata.next(doc); 
+      localStorage.setItem('name', doc.name);
     });
   }
 

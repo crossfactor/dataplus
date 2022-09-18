@@ -4,6 +4,8 @@ import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { DataService } from '../../data.service';
 
+
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,11 +16,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     public dataS: DataService,
     public auth: AuthService,
     private route: Router
-  ) {}
+   
+  ) {
+    
+    
+  }
 
   isAuth = false;
   isAdmin = false;
     user:any
+    username:string = localStorage.getItem('name');
   menus = [
     { name: 'Admin', enabled: false, click: 'adminRoute' },
     { name: 'History', enabled: true, click: 'historyRoute' },
@@ -26,22 +33,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ];
 
   ngOnInit() {
-    this.dataS.getSku()
+    
     this.auth.signedIn.subscribe((arg) => {
       this.isAuth = arg;
 
-      if (arg == false) {
-        if (localStorage.getItem('signedIn') == 'yes') {
-          this.isAuth = true;
-          this.auth.login(
-            localStorage.getItem('username'),
-            localStorage.getItem('password')
-          );
-        }
-      }
     });
+     
 
-    this.dataS.userdata.subscribe(arg =>{this.user = arg; console.log(arg)})
+    this.dataS.userdata.subscribe(arg =>{ this.user = arg.name; console.log(arg)
+    })
+    //this.dataS.getSku()
+           
+
 
   }
 
@@ -72,4 +75,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   historyRoute() {
     this.route.navigate(['/history']);
   }
+
+
+
+
 }
