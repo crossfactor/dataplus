@@ -1,4 +1,11 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, EventEmitter,Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 
 import { DataService } from '../../data.service';
@@ -10,25 +17,19 @@ import { Observable, map, BehaviorSubject, Subscription } from 'rxjs';
 @Component({
   selector: 'app-pmi',
   templateUrl: './pmi.component.html',
-  styleUrls: ['./pmi.component.css']
+  styleUrls: ['./pmi.component.css'],
 })
-export class PmiComponent implements OnInit ,OnDestroy{
-
+export class PmiComponent implements OnInit, OnDestroy {
   constructor(
     public datepipe: DatePipe,
     public Auth: AuthService,
-    public dataService: DataService,
-    
-   
-    
-  
-  ) { }
+    public dataService: DataService
+  ) {}
 
   @Output() valueChange = new EventEmitter();
 
-  obs : Subscription
-  obs2 : Subscription
-
+  obs: Subscription;
+  obs2: Subscription;
 
   color: string;
   storeName: string;
@@ -48,66 +49,109 @@ export class PmiComponent implements OnInit ,OnDestroy{
   searchText: string;
   animationState = 'out';
 
-    cignames:any
+  cignames: any;
 
-productData1 :any = new BehaviorSubject<any>([
-  {brandName:"Marlboro",size:"regular",flavour:"Red",picture:"../assets/marlboro_red.png"},
-  {brandName:"Marlboro",size:"regular",flavour:"Gold",picture:"../assets/marlboro_gold.png"},
-  {brandName:"Marlboro",size:"regular",flavour:"Ice",picture:"../assets/marlboro_ice.png"},
-  {brandName:"Marlboro",size:"regular",flavour:"Double Fusion",picture:"../assets/marlboro_fusion.png"},
-  {brandName:"Marlboro",size:"regular",flavour:"Vista",picture:"../assets/marlboro_vista.png"}
-  
-]);
- 
-productData2 :any = new BehaviorSubject<any>([
-  {brandName:"Marlboro",size:"Carton",flavour:"Red",picture:"../assets/marlboro_carton_red.png"},
-  {brandName:"Marlboro",size:"Carton",flavour:"Gold",picture:"../assets/marlboro_carton_gold.png"},
-  {brandName:"Marlboro",size:"Carton",flavour:"Ice",picture:"../assets/marlboro_carton_ice.png"},
-  {brandName:"Marlboro",size:"Carton",flavour:"Double Fusion",picture:"../assets/marlboro_carton_fusion.png"}
- 
+  productData1: any = new BehaviorSubject<any>([
+    {
+      brandName: 'Marlboro',
+      size: 'regular',
+      flavour: 'Red',
+      picture: '../assets/marlboro_red.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'regular',
+      flavour: 'Gold',
+      picture: '../assets/marlboro_gold.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'regular',
+      flavour: 'Ice',
+      picture: '../assets/marlboro_ice.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'regular',
+      flavour: 'Double Fusion',
+      picture: '../assets/marlboro_fusion.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'regular',
+      flavour: 'Vista',
+      picture: '../assets/marlboro_vista.png',
+    },
+  ]);
 
-]);
+  productData2: any = new BehaviorSubject<any>([
+    {
+      brandName: 'Marlboro',
+      size: 'Carton',
+      flavour: 'Red',
+      picture: '../assets/marlboro_carton_red.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'Carton',
+      flavour: 'Gold',
+      picture: '../assets/marlboro_carton_gold.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'Carton',
+      flavour: 'Ice',
+      picture: '../assets/marlboro_carton_ice.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'Carton',
+      flavour: 'Double Fusion',
+      picture: '../assets/marlboro_carton_fusion.png',
+    },
+  ]);
 
-cartonNames:any[] = [
-  {brandName:"Marlboro",size:"Carton",flavour:"Red",picture:"../assets/marlboro_carton_red.png"},
-  {brandName:"Marlboro",size:"Carton",flavour:"Gold",picture:"../assets/marlboro_carton_gold.png"},
-  {brandName:"Marlboro",size:"Carton",flavour:"Ice",picture:"../assets/marlboro_carton_ice.png"},
-  {brandName:"Marlboro",size:"Carton",flavour:"Double Fusion",picture:"../assets/marlboro_carton_fusion.png"}
- 
+  cartonNames: any[] = [
+    {
+      brandName: 'Marlboro',
+      size: 'Carton',
+      flavour: 'Red',
+      picture: '../assets/marlboro_carton_red.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'Carton',
+      flavour: 'Gold',
+      picture: '../assets/marlboro_carton_gold.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'Carton',
+      flavour: 'Ice',
+      picture: '../assets/marlboro_carton_ice.png',
+    },
+    {
+      brandName: 'Marlboro',
+      size: 'Carton',
+      flavour: 'Double Fusion',
+      picture: '../assets/marlboro_carton_fusion.png',
+    },
+  ];
 
-]
+  dispencersArray: any[] = [
+    { dispencerName: 'Marlboro', Marlboro_share: 40 },
+    { dispencerName: 'L_M' },
+    { dispencerName: 'Rothmans' },
+    { dispencerName: 'Broadway' },
+    { dispencerName: 'Du_Maurier' },
+    { dispencerName: 'Dunhill' },
+    { dispencerName: 'Revel' },
+    { dispencerName: 'Zon_King' },
+    { dispencerName: 'Trini_Blendz' },
+    { dispencerName: 'Tradition' },
+  ];
 
-
-
-
-dispencersArray:any[] = [
-  {dispencerName:"Marlboro", Marlboro_share:40},
-  {dispencerName:"L_M"},
-  {dispencerName:"Rothmans"},
-  {dispencerName:"Broadway"},
-  {dispencerName:"Du_Maurier"},
-  {dispencerName:"Dunhill"},
-  {dispencerName:"Revel"},
-  {dispencerName:"Zon_King"},
-  {dispencerName:"Trini_Blendz"},
-  {dispencerName:"Tradition"},
-
-
-]
-
-
-
-
-
-
-
-
-
-
-
-
-
-  reset : boolean = false
+  reset: boolean = false;
 
   public storeForm: FormGroup;
 
@@ -141,14 +185,10 @@ dispencersArray:any[] = [
     { name: 'Restaurant' },
     { name: 'Supermarket' },
     { name: 'Wholesaler' },
-    { name: 'Other' }
+    { name: 'Other' },
   ];
 
-
-
   ngOnInit(): void {
-
-
     //this.dataService.getAllProducts();
 
     //this.dataService.getSku();
@@ -161,35 +201,29 @@ dispencersArray:any[] = [
     );
 
     this.obs = this.dataService.all_products.subscribe((arg) => {
-      
-   //   console.log(arg)
+      //   console.log(arg)
     });
 
     //end of for loop
-    
-   
 
-
-    this.productData1.subscribe((prods) => this.cignames = prods)
-    this.productData2.subscribe((prods) => this.cartonNames = prods)
-
+    this.productData1.subscribe((prods) => (this.cignames = prods));
+    this.productData2.subscribe((prods) => (this.cartonNames = prods));
   }
 
   ngAfterViewInit(): void {
-
-    this.dataService.db.get('pml-data').then((doc: any) => {
-      //this.productData._id = doc._id;
-      //this.productData._rev = doc._rev;
-    //  console.log(doc)
-      this.productData1.next(doc.dataCat1)
-      this.productData2.next(doc.dataCat2)
-      //this.dataService.db.put(this.arrayData);
-    });
-
+    this.dataService.db.get('pmi-data').then((doc: any) => {
+    //this.productData._id = doc._id; del
+    //this.productData._rev = doc._rev; del
+    //  console.log(doc) del
+     this.productData1.next(doc.data1)
+       this.productData2.next(doc.data2)
+    //this.dataService.db.put(this.arrayData); del
+      });
   }
 
-
-  log(val) { console.log(val); }
+  log(val) {
+    console.log(val);
+  }
 
   getLocation(): void {
     this.dateNtimeStart = +new Date();
@@ -237,28 +271,24 @@ dispencersArray:any[] = [
     else this.color = 'white';
   }
 
-
   arrays: any;
 
-
   OnSubmit(f: NgForm) {
-    
-    this.arrays = { ...this.arrays, ...f.form.value};
+    this.arrays = { ...this.arrays, ...f.form.value };
     //console.log(this.datepipe.transform(this.dateNtimeStart, 'yyyy-MM-dd'));
     this.dateNtimeEnd = +new Date();
     console.log(f.form.value);
-   
+
     //console.log(this.Auth.DecodeID(localStorage.getItem('username')));
-   
+
     this.arrays.dateNtimeStart = this.dateNtimeStart;
     this.arrays.dateNtimeEnd = this.dateNtimeEnd;
     this.arrays.latitude = this.lat;
     this.arrays.longitude = this.long;
     this.arrays.locationAccuracy = this.accu;
-    
-    //un-comment the following line me, post data to db // 
+
+    //un-comment the following line me, post data to db //
     this.dataService.postData(this.arrays);
-    
 
     console.log(this.arrays);
 
@@ -267,29 +297,15 @@ dispencersArray:any[] = [
     this.lat = 0;
     this.long = 0;
     this.accu = 0;
-        this.reset = true;
+    this.reset = true;
     f.resetForm();
-    
   }
-  
 
+  resets() {
+    this.reset = !this.reset;
+  }
 
-
-
-  resets(){this.reset = !this.reset}
-
-ngOnDestroy(){
-this.obs.unsubscribe()
-
-}
-
-
-
-
-
-
-
-
-
-
+  ngOnDestroy() {
+    this.obs.unsubscribe();
+  }
 }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -24,6 +24,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   dataTest: any;
   arrayTest: any = { _id: '', _rev: '' };
   arrayData: any = { _id: '', _rev: '' };
+  arrayNew : any = new BehaviorSubject<any>  ({})
+arrayTesty: any
+
   dateNtime: any;
   all_products: any;
   productFields: any[] = [
@@ -64,6 +67,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.obs = this.dataService.all_products.subscribe((data) => {
       this.all_products = data; //, console.log(data);
     });
+
+    this.arrayNew.subscribe((prods) => this.arrayTesty = prods)
+
   }
 
   checkTest() {
@@ -89,7 +95,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       var numberOfFiles = files.length;
 
       for (let iterator = 0; iterator < numberOfFiles; ) {
-        //console.log('woof');
+        
 
         let file: File = files.item(iterator);
 
@@ -97,7 +103,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         let reader: FileReader = new FileReader();
         reader.readAsText(file);
 
-        var result = [];
+        var result = {};
         reader.onload = (e) => {
           let csv: string = reader.result as string;
 
@@ -107,7 +113,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           //split the first line into a headers array
           this.headers = this.fileArray[0].split(',');
           console.log(this.headers);
-          var test = [];
+          var test = {};
 
           //loop over every line except header
           for (var i = 1; i < this.fileArray.length; i++) {
@@ -116,45 +122,39 @@ export class AdminComponent implements OnInit, OnDestroy {
             //console.log(this.fileArray.length);
             // console.log(currentline);
             var obj = {};
-            var obj2 = {};
+           
 
             //skip blank lines
             if (!this.fileArray[i].match(/^[,\s]*$/)) {
               //regex to find spaces and commas on line only
               //merge the headers with the line data
-              var head = 'data11';
+              var head = 'nada';
               for (let j = 0; j < this.headers.length; j++) {
+                
                 //split header into parts
 
                 const headerSplit = this.headers[j].split('__');
 
                 
 
-                // split obj on data headers
+                
                 
                 if (head == headerSplit[0]){obj[headerSplit[1]] = currentline[j];}
-
-                console.log(j)
-                //if (j == 0) {
-                //  head = headerSplit[0];
-               // }
-
-                console.log (obj)
+              
                 
                 if (!test[headerSplit[0]]) {
                   test[headerSplit[0]] = [];
                 }
                 
 
-                console.log(head, headerSplit[0]);
+               // console.log(head, headerSplit[0]);
                 if (head != headerSplit[0]) {
-                  console.log('%cnew array', 'color: blue');
-                  //console.log(obj);
+                
                  if (j!= 0 ){test[head].push(obj);} 
                   head = headerSplit[0];
                   obj = {}
                   obj[headerSplit[1]] = currentline[j];
-                  console.log(obj);
+                  
                 }
                 
               
@@ -171,16 +171,13 @@ export class AdminComponent implements OnInit, OnDestroy {
             // console.log(result)
           } //end of if
 
-          //console.log(obj);
-          //testing["data1"] = result
-          //console.log(result);
+          
           console.log(test);
-          result = test;
+          this.arrayNew.next(test)
+          //result = test;
         };
 
-        console.log(result);
-        // this.arrayData['dataCat' + iterator] = result;
-        // console.log(this.arrayData);
+        
 
         console.log('%cLog Message', 'color: orange');
       }
@@ -188,7 +185,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     //end of for file loop
 
     console.log('%cfulldata', 'color: green');
-    console.log(this.arrayData);
+    console.log(this.arrayNew);
 
     this.getData();
   }

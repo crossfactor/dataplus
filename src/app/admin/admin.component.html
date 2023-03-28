@@ -1,4 +1,4 @@
-<div fxLayoutGap="15px" fxLayout="column" fxLayoutAlign="center center" style="width:100%">
+<div fxLayoutGap="15px" fxLayout="column" fxLayoutAlign="center center" style="background-color:red;width:100%;height:100%">
 
 
     <mat-card style="background-color: darkkhaki; width:80%">
@@ -42,12 +42,12 @@
 
 
 
-    <div style="background-color: darkgreen;width:80%">
+    <div style="background-color: darkgreen;width:80%;height:100%">
         <div fxlayoutGap="10px">
-            <div>Products</div>
+            <div style="color:white">Products</div>
 
-            <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center"
-                *ngFor="let product of arrayData.data1">
+            <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center" 
+                *ngFor="let product of arrayTesty.data1">
                 <mat-card style="width: 90%;">
 
                     <form #skuForm=ngForm (ngSubmit)="OnSubmit(skuForm)">
@@ -79,3 +79,4 @@
 
 
 </div>
+
